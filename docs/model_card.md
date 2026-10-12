@@ -4,8 +4,8 @@
 > Inspirée de Mitchell et al., "Model Cards for Model Reporting" (2019).
 
 ## 1. Identité
-- Nom / version : Berger V1
-- Date d'entraînement : 06/10/2026
+- Nom / version : Berger Nolan et Lemaissi Wafah v2
+- Date d'entraînement : 12/10/2026
 - Responsables (binôme) : Nolan Berger
 - Emplacement de l'artefact (fichier, registre, image) :
 
