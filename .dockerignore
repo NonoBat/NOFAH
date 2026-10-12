@@ -1,0 +1,15 @@
+# Cit & IDE
+.git
+.gitignore
+.vscode/
+.idea/
+
+# Secrets et config locale
+.env
+*.env
+.venv
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*.egg-info/

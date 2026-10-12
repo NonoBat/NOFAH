@@ -73,3 +73,18 @@ exercices/         démo pickle (S1)
 Chaque activité indique son mode : **sans IA**, **IA déclarée** ou **IA imposée**.
 En mode IA déclarée, ajoutez dans la description de vos commits ou de votre rendu :
 outil utilisé, ce que vous lui avez demandé, ce que vous avez vérifié ou corrigé.
+
+## Usage d'une prédiction TP2
+
+Pour le tp 2, nous avons besoin de tester l'API avec une prédiction. Pour cela, nous allons utiliser la commande curl.
+
+```bash
+curl -X POST http://[IP_ADDRESS]/v1/predict \ 
+  -H "Content-Type: application/json" \
+  -d '{"station_id": 1, "timestamp": "2026-10-06T08:00:00+02:00", "capacity": 20, "bikes_available": 12, "temperature": 14.5, "is_raining": false}'
+  ```
+
+Ensuite pour lire la base de données, nous allons utiliser la commande docker exec. 
+```bash
+docker exec nofah-db-1 psql -U velov_user -d velov -c "SELECT * FROM predictions;"
+```
