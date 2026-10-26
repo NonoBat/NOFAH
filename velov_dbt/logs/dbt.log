@@ -1,0 +1,1202 @@
+[0m15:17:16.471116 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E9264EB440>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E922C76720>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E922C764E0>]}
+
+
+============================== 15:17:16.475114 | 60dae89c-5827-4aa0-8a56-0f9bea9c2d08 ==============================
+[0m15:17:16.475114 [info ] [MainThread]: Running with dbt=1.12.6
+[0m15:17:16.475496 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'maximum_seed_size_mib': '1', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'static_parser': 'True', 'printer_width': '80', 'write_json': 'True', 'empty': 'False', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': '.', 'invocation_command': 'dbt build --profiles-dir .', 'hints_enabled': 'True', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'use_colors': 'True', 'log_path': 'C:\\Users\\nolan\\DataEngM2\\IndusIA\\NOFAH\\velov_dbt\\logs'}
+[0m15:17:16.715968 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '60dae89c-5827-4aa0-8a56-0f9bea9c2d08', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E92691D9D0>]}
+[0m15:17:16.763075 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '60dae89c-5827-4aa0-8a56-0f9bea9c2d08', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E9267A16A0>]}
+[0m15:17:16.766074 [info ] [MainThread]: Registered adapter: duckdb=1.11.0
+[0m15:17:17.036779 [debug] [MainThread]: checksum: abec6bb70da8a12e11f6192bd639488c496bdb93b0be293d51fce7e3613962e3, vars: {}, profile: velov, target: dev, version: 1.12.6
+[0m15:17:17.037779 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m15:17:17.038292 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '60dae89c-5827-4aa0-8a56-0f9bea9c2d08', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E9267E2150>]}
+[0m15:17:19.809190 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '60dae89c-5827-4aa0-8a56-0f9bea9c2d08', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E928107EF0>]}
+[0m15:17:19.876863 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\manifest.json
+[0m15:17:19.902385 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\semantic_manifest.json
+[0m15:17:20.265395 [debug] [MainThread]: Wrote artifact OsiDocument to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\osi_document.json
+[0m15:17:20.500416 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '60dae89c-5827-4aa0-8a56-0f9bea9c2d08', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E9281F0D70>]}
+[0m15:17:20.500921 [info ] [MainThread]: Found 3 models, 10 data tests, 500 macros
+[0m15:17:20.503169 [info ] [MainThread]: 
+[0m15:17:20.503690 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m15:17:20.504228 [info ] [MainThread]: 
+[0m15:17:20.504228 [debug] [MainThread]: Acquiring new duckdb connection 'master'
+[0m15:17:20.507954 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_velov'
+[0m15:17:24.739418 [debug] [ThreadPool]: Using duckdb connection "list_velov"
+[0m15:17:24.739418 [debug] [ThreadPool]: On list_velov: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "connection_name": "list_velov"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"velov"'
+    
+  
+  
+[0m15:17:24.740419 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:17:24.785094 [debug] [ThreadPool]: SQL status: OK in 0.045 seconds
+[0m15:17:24.785094 [debug] [ThreadPool]: On list_velov: Close
+[0m15:17:24.786610 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_velov, now create_velov_main)
+[0m15:17:24.787616 [debug] [ThreadPool]: Creating schema "database: "velov"
+schema: "main"
+"
+[0m15:17:24.791631 [debug] [ThreadPool]: Using duckdb connection "create_velov_main"
+[0m15:17:24.792641 [debug] [ThreadPool]: On create_velov_main: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "connection_name": "create_velov_main"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='velov'
+        and type != 'duckdb'
+    
+  
+[0m15:17:24.792641 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:17:24.793635 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m15:17:24.794642 [debug] [ThreadPool]: Using duckdb connection "create_velov_main"
+[0m15:17:24.794642 [debug] [ThreadPool]: On create_velov_main: BEGIN
+[0m15:17:24.795645 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m15:17:24.795645 [debug] [ThreadPool]: Using duckdb connection "create_velov_main"
+[0m15:17:24.795645 [debug] [ThreadPool]: On create_velov_main: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "connection_name": "create_velov_main"} */
+
+    
+    
+        create schema if not exists "velov"."main"
+    
+[0m15:17:24.796641 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m15:17:24.797647 [debug] [ThreadPool]: On create_velov_main: COMMIT
+[0m15:17:24.797647 [debug] [ThreadPool]: Using duckdb connection "create_velov_main"
+[0m15:17:24.797647 [debug] [ThreadPool]: On create_velov_main: COMMIT
+[0m15:17:24.797647 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m15:17:24.798641 [debug] [ThreadPool]: On create_velov_main: Close
+[0m15:17:24.799647 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_velov_main'
+[0m15:17:24.802131 [debug] [ThreadPool]: Using duckdb connection "list_velov_main"
+[0m15:17:24.802131 [debug] [ThreadPool]: On list_velov_main: BEGIN
+[0m15:17:24.803140 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:17:24.804133 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m15:17:24.804133 [debug] [ThreadPool]: Using duckdb connection "list_velov_main"
+[0m15:17:24.804133 [debug] [ThreadPool]: On list_velov_main: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "connection_name": "list_velov_main"} */
+select
+      'velov' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main'
+    and lower(table_catalog) = 'velov'
+  
+[0m15:17:24.814207 [debug] [ThreadPool]: SQL status: OK in 0.010 seconds
+[0m15:17:24.815210 [debug] [ThreadPool]: On list_velov_main: ROLLBACK
+[0m15:17:24.816230 [debug] [ThreadPool]: On list_velov_main: Close
+[0m15:17:24.816230 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '60dae89c-5827-4aa0-8a56-0f9bea9c2d08', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E9281C3350>]}
+[0m15:17:24.817214 [debug] [MainThread]: Using duckdb connection "master"
+[0m15:17:24.817214 [debug] [MainThread]: On master: BEGIN
+[0m15:17:24.817214 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:17:24.817214 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m15:17:24.818214 [debug] [MainThread]: On master: COMMIT
+[0m15:17:24.818214 [debug] [MainThread]: Using duckdb connection "master"
+[0m15:17:24.818214 [debug] [MainThread]: On master: COMMIT
+[0m15:17:24.818214 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m15:17:24.818214 [debug] [MainThread]: On master: Close
+[0m15:17:24.824228 [debug] [Thread-1 (]: Began running node model.velov.stg_station_information
+[0m15:17:24.824228 [info ] [Thread-1 (]: 1 of 13 START sql view model main.stg_station_information ...................... [RUN]
+[0m15:17:24.825223 [debug] [Thread-1 (]: Acquiring new duckdb connection 'model.velov.stg_station_information'
+[0m15:17:24.825223 [debug] [Thread-1 (]: Began compiling node model.velov.stg_station_information
+[0m15:17:24.829026 [debug] [Thread-1 (]: Writing injected SQL for node "model.velov.stg_station_information"
+[0m15:17:24.831745 [debug] [Thread-1 (]: Began executing node model.velov.stg_station_information
+[0m15:17:24.849690 [debug] [Thread-1 (]: Writing runtime sql for node "model.velov.stg_station_information"
+[0m15:17:24.851675 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_information"
+[0m15:17:24.852681 [debug] [Thread-1 (]: On model.velov.stg_station_information: BEGIN
+[0m15:17:24.852681 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m15:17:24.853676 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:24.853676 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_information"
+[0m15:17:24.853676 [debug] [Thread-1 (]: On model.velov.stg_station_information: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_information"} */
+
+  
+  create view "velov"."main"."stg_station_information__dbt_tmp" as (
+    select
+    cast(s.station_id as integer) as station_id,
+    s.name                        as name,
+    cast(s.capacity as integer)   as capacity
+from (
+    select unnest(data.stations) as s
+    from read_json('../data/bronze/station_information/*/*.json')
+)
+qualify row_number() over (
+    partition by s.station_id
+    order by s.name
+) = 1
+  );
+
+[0m15:17:24.881302 [debug] [Thread-1 (]: SQL status: OK in 0.027 seconds
+[0m15:17:24.884285 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_information"
+[0m15:17:24.885285 [debug] [Thread-1 (]: On model.velov.stg_station_information: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_information"} */
+alter view "velov"."main"."stg_station_information__dbt_tmp" rename to "stg_station_information"
+[0m15:17:24.885285 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m15:17:24.894336 [debug] [Thread-1 (]: On model.velov.stg_station_information: COMMIT
+[0m15:17:24.895334 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_information"
+[0m15:17:24.895334 [debug] [Thread-1 (]: On model.velov.stg_station_information: COMMIT
+[0m15:17:24.897330 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m15:17:24.900331 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_information"
+[0m15:17:24.901332 [debug] [Thread-1 (]: On model.velov.stg_station_information: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_information"} */
+
+      drop view if exists "velov"."main"."stg_station_information__dbt_backup" cascade
+    
+[0m15:17:24.901332 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m15:17:24.903333 [debug] [Thread-1 (]: On model.velov.stg_station_information: Close
+[0m15:17:24.911426 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '60dae89c-5827-4aa0-8a56-0f9bea9c2d08', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E928268B30>]}
+[0m15:17:24.912428 [info ] [Thread-1 (]: 1 of 13 OK created sql view model main.stg_station_information ................. [[32mOK[0m in 0.08s]
+[0m15:17:24.913275 [debug] [Thread-1 (]: Finished running node model.velov.stg_station_information
+[0m15:17:24.913275 [debug] [Thread-1 (]: Began running node model.velov.stg_station_status
+[0m15:17:24.913782 [info ] [Thread-1 (]: 2 of 13 START sql view model main.stg_station_status ........................... [RUN]
+[0m15:17:24.914845 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.velov.stg_station_information, now model.velov.stg_station_status)
+[0m15:17:24.914845 [debug] [Thread-1 (]: Began compiling node model.velov.stg_station_status
+[0m15:17:24.916434 [debug] [Thread-1 (]: Writing injected SQL for node "model.velov.stg_station_status"
+[0m15:17:24.916968 [debug] [Thread-1 (]: Began executing node model.velov.stg_station_status
+[0m15:17:24.919659 [debug] [Thread-1 (]: Writing runtime sql for node "model.velov.stg_station_status"
+[0m15:17:24.921289 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_status"
+[0m15:17:24.921818 [debug] [Thread-1 (]: On model.velov.stg_station_status: BEGIN
+[0m15:17:24.921818 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:17:24.922860 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:24.922860 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_status"
+[0m15:17:24.923378 [debug] [Thread-1 (]: On model.velov.stg_station_status: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_status"} */
+
+  
+  create view "velov"."main"."stg_station_status__dbt_tmp" as (
+    select
+    cast(s.station_id as integer)  as station_id,
+    to_timestamp(s.last_reported)  as reported_at,
+    to_timestamp(last_updated)     as feed_updated_at,
+    s.num_bikes_available          as bikes_available,
+    s.is_installed = 1             as is_installed
+from (
+    select last_updated, unnest(data.stations) as s
+    from read_json('../data/bronze/station_status/*/*.json')
+)
+qualify row_number() over (
+    partition by s.station_id, s.last_reported
+    order by last_updated) = 1
+  );
+
+[0m15:17:24.938114 [debug] [Thread-1 (]: SQL status: OK in 0.015 seconds
+[0m15:17:24.989945 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_status"
+[0m15:17:24.990946 [debug] [Thread-1 (]: On model.velov.stg_station_status: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_status"} */
+alter view "velov"."main"."stg_station_status__dbt_tmp" rename to "stg_station_status"
+[0m15:17:24.990946 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m15:17:24.991947 [debug] [Thread-1 (]: On model.velov.stg_station_status: COMMIT
+[0m15:17:24.992946 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_status"
+[0m15:17:24.992946 [debug] [Thread-1 (]: On model.velov.stg_station_status: COMMIT
+[0m15:17:24.993951 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:24.996452 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_status"
+[0m15:17:24.996452 [debug] [Thread-1 (]: On model.velov.stg_station_status: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_status"} */
+
+      drop view if exists "velov"."main"."stg_station_status__dbt_backup" cascade
+    
+[0m15:17:24.997462 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m15:17:24.997462 [debug] [Thread-1 (]: On model.velov.stg_station_status: Close
+[0m15:17:24.998459 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '60dae89c-5827-4aa0-8a56-0f9bea9c2d08', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E9286AA5A0>]}
+[0m15:17:24.998459 [info ] [Thread-1 (]: 2 of 13 OK created sql view model main.stg_station_status ...................... [[32mOK[0m in 0.08s]
+[0m15:17:24.999452 [debug] [Thread-1 (]: Finished running node model.velov.stg_station_status
+[0m15:17:24.999452 [debug] [Thread-1 (]: Began running node test.velov.not_null_stg_station_information_capacity.52ac6e7a27
+[0m15:17:24.999956 [info ] [Thread-1 (]: 3 of 13 START test not_null_stg_station_information_capacity ................... [RUN]
+[0m15:17:25.000514 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.velov.stg_station_status, now test.velov.not_null_stg_station_information_capacity.52ac6e7a27)
+[0m15:17:25.001036 [debug] [Thread-1 (]: Began compiling node test.velov.not_null_stg_station_information_capacity.52ac6e7a27
+[0m15:17:25.010181 [debug] [Thread-1 (]: Writing injected SQL for node "test.velov.not_null_stg_station_information_capacity.52ac6e7a27"
+[0m15:17:25.011772 [debug] [Thread-1 (]: Began executing node test.velov.not_null_stg_station_information_capacity.52ac6e7a27
+[0m15:17:25.022779 [debug] [Thread-1 (]: Writing runtime sql for node "test.velov.not_null_stg_station_information_capacity.52ac6e7a27"
+[0m15:17:25.023782 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_stg_station_information_capacity.52ac6e7a27"
+[0m15:17:25.024790 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_information_capacity.52ac6e7a27: BEGIN
+[0m15:17:25.024790 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:17:25.024790 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.025788 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_stg_station_information_capacity.52ac6e7a27"
+[0m15:17:25.025788 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_information_capacity.52ac6e7a27: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "test.velov.not_null_stg_station_information_capacity.52ac6e7a27"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select capacity
+from "velov"."main"."stg_station_information"
+where capacity is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m15:17:25.047848 [debug] [Thread-1 (]: SQL status: OK in 0.022 seconds
+[0m15:17:25.050855 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_information_capacity.52ac6e7a27: ROLLBACK
+[0m15:17:25.050855 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_information_capacity.52ac6e7a27: Close
+[0m15:17:25.051856 [info ] [Thread-1 (]: 3 of 13 PASS not_null_stg_station_information_capacity ......................... [[32mPASS[0m in 0.05s]
+[0m15:17:25.052159 [debug] [Thread-1 (]: Finished running node test.velov.not_null_stg_station_information_capacity.52ac6e7a27
+[0m15:17:25.052159 [debug] [Thread-1 (]: Began running node test.velov.not_null_stg_station_information_station_id.5fca33d3c0
+[0m15:17:25.052664 [info ] [Thread-1 (]: 4 of 13 START test not_null_stg_station_information_station_id ................. [RUN]
+[0m15:17:25.053196 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.velov.not_null_stg_station_information_capacity.52ac6e7a27, now test.velov.not_null_stg_station_information_station_id.5fca33d3c0)
+[0m15:17:25.053850 [debug] [Thread-1 (]: Began compiling node test.velov.not_null_stg_station_information_station_id.5fca33d3c0
+[0m15:17:25.058106 [debug] [Thread-1 (]: Writing injected SQL for node "test.velov.not_null_stg_station_information_station_id.5fca33d3c0"
+[0m15:17:25.058627 [debug] [Thread-1 (]: Began executing node test.velov.not_null_stg_station_information_station_id.5fca33d3c0
+[0m15:17:25.059694 [debug] [Thread-1 (]: Writing runtime sql for node "test.velov.not_null_stg_station_information_station_id.5fca33d3c0"
+[0m15:17:25.060741 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_stg_station_information_station_id.5fca33d3c0"
+[0m15:17:25.060741 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_information_station_id.5fca33d3c0: BEGIN
+[0m15:17:25.061267 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:17:25.062334 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.062334 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_stg_station_information_station_id.5fca33d3c0"
+[0m15:17:25.062857 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_information_station_id.5fca33d3c0: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "test.velov.not_null_stg_station_information_station_id.5fca33d3c0"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select station_id
+from "velov"."main"."stg_station_information"
+where station_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m15:17:25.085712 [debug] [Thread-1 (]: SQL status: OK in 0.022 seconds
+[0m15:17:25.087219 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_information_station_id.5fca33d3c0: ROLLBACK
+[0m15:17:25.088227 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_information_station_id.5fca33d3c0: Close
+[0m15:17:25.088227 [info ] [Thread-1 (]: 4 of 13 PASS not_null_stg_station_information_station_id ....................... [[32mPASS[0m in 0.04s]
+[0m15:17:25.089047 [debug] [Thread-1 (]: Finished running node test.velov.not_null_stg_station_information_station_id.5fca33d3c0
+[0m15:17:25.089047 [debug] [Thread-1 (]: Began running node test.velov.unique_stg_station_information_station_id.757c4f7304
+[0m15:17:25.089552 [info ] [Thread-1 (]: 5 of 13 START test unique_stg_station_information_station_id ................... [RUN]
+[0m15:17:25.090079 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.velov.not_null_stg_station_information_station_id.5fca33d3c0, now test.velov.unique_stg_station_information_station_id.757c4f7304)
+[0m15:17:25.090079 [debug] [Thread-1 (]: Began compiling node test.velov.unique_stg_station_information_station_id.757c4f7304
+[0m15:17:25.097269 [debug] [Thread-1 (]: Writing injected SQL for node "test.velov.unique_stg_station_information_station_id.757c4f7304"
+[0m15:17:25.098929 [debug] [Thread-1 (]: Began executing node test.velov.unique_stg_station_information_station_id.757c4f7304
+[0m15:17:25.099994 [debug] [Thread-1 (]: Writing runtime sql for node "test.velov.unique_stg_station_information_station_id.757c4f7304"
+[0m15:17:25.101038 [debug] [Thread-1 (]: Using duckdb connection "test.velov.unique_stg_station_information_station_id.757c4f7304"
+[0m15:17:25.101597 [debug] [Thread-1 (]: On test.velov.unique_stg_station_information_station_id.757c4f7304: BEGIN
+[0m15:17:25.101597 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:17:25.102608 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.102608 [debug] [Thread-1 (]: Using duckdb connection "test.velov.unique_stg_station_information_station_id.757c4f7304"
+[0m15:17:25.102608 [debug] [Thread-1 (]: On test.velov.unique_stg_station_information_station_id.757c4f7304: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "test.velov.unique_stg_station_information_station_id.757c4f7304"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+select
+    station_id as unique_field,
+    count(*) as n_records
+
+from "velov"."main"."stg_station_information"
+where station_id is not null
+group by station_id
+having count(*) > 1
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m15:17:25.124692 [debug] [Thread-1 (]: SQL status: OK in 0.021 seconds
+[0m15:17:25.125692 [debug] [Thread-1 (]: On test.velov.unique_stg_station_information_station_id.757c4f7304: ROLLBACK
+[0m15:17:25.126712 [debug] [Thread-1 (]: On test.velov.unique_stg_station_information_station_id.757c4f7304: Close
+[0m15:17:25.127693 [info ] [Thread-1 (]: 5 of 13 PASS unique_stg_station_information_station_id ......................... [[32mPASS[0m in 0.04s]
+[0m15:17:25.127693 [debug] [Thread-1 (]: Finished running node test.velov.unique_stg_station_information_station_id.757c4f7304
+[0m15:17:25.128462 [debug] [Thread-1 (]: Began running node test.velov.bikes_within_capacity
+[0m15:17:25.129560 [info ] [Thread-1 (]: 6 of 13 START test bikes_within_capacity ....................................... [RUN]
+[0m15:17:25.130096 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.velov.unique_stg_station_information_station_id.757c4f7304, now test.velov.bikes_within_capacity)
+[0m15:17:25.130096 [debug] [Thread-1 (]: Began compiling node test.velov.bikes_within_capacity
+[0m15:17:25.131665 [debug] [Thread-1 (]: Writing injected SQL for node "test.velov.bikes_within_capacity"
+[0m15:17:25.132733 [debug] [Thread-1 (]: Began executing node test.velov.bikes_within_capacity
+[0m15:17:25.133775 [debug] [Thread-1 (]: Writing runtime sql for node "test.velov.bikes_within_capacity"
+[0m15:17:25.134866 [debug] [Thread-1 (]: Using duckdb connection "test.velov.bikes_within_capacity"
+[0m15:17:25.135389 [debug] [Thread-1 (]: On test.velov.bikes_within_capacity: BEGIN
+[0m15:17:25.135389 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:17:25.135903 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.136425 [debug] [Thread-1 (]: Using duckdb connection "test.velov.bikes_within_capacity"
+[0m15:17:25.136950 [debug] [Thread-1 (]: On test.velov.bikes_within_capacity: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "test.velov.bikes_within_capacity"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  -- tests/bikes_within_capacity.sql
+-- échoue s'il renvoie au moins une ligne (Slide 27 du pptx S3)
+select
+    s.station_id,
+    s.reported_at,
+    s.bikes_available,
+    i.capacity
+from "velov"."main"."stg_station_status" s
+join "velov"."main"."stg_station_information" i
+    using (station_id)
+where s.bikes_available < 0
+   or s.bikes_available > i.capacity
+  
+  
+      
+    ) dbt_internal_test
+[0m15:17:25.167259 [debug] [Thread-1 (]: SQL status: OK in 0.030 seconds
+[0m15:17:25.168280 [debug] [Thread-1 (]: On test.velov.bikes_within_capacity: ROLLBACK
+[0m15:17:25.168280 [debug] [Thread-1 (]: On test.velov.bikes_within_capacity: Close
+[0m15:17:25.169264 [info ] [Thread-1 (]: 6 of 13 PASS bikes_within_capacity ............................................. [[32mPASS[0m in 0.04s]
+[0m15:17:25.169733 [debug] [Thread-1 (]: Finished running node test.velov.bikes_within_capacity
+[0m15:17:25.169733 [debug] [Thread-1 (]: Began running node test.velov.not_null_stg_station_status_reported_at.f45832c796
+[0m15:17:25.170239 [info ] [Thread-1 (]: 7 of 13 START test not_null_stg_station_status_reported_at ..................... [RUN]
+[0m15:17:25.170824 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.velov.bikes_within_capacity, now test.velov.not_null_stg_station_status_reported_at.f45832c796)
+[0m15:17:25.171369 [debug] [Thread-1 (]: Began compiling node test.velov.not_null_stg_station_status_reported_at.f45832c796
+[0m15:17:25.175066 [debug] [Thread-1 (]: Writing injected SQL for node "test.velov.not_null_stg_station_status_reported_at.f45832c796"
+[0m15:17:25.175612 [debug] [Thread-1 (]: Began executing node test.velov.not_null_stg_station_status_reported_at.f45832c796
+[0m15:17:25.176717 [debug] [Thread-1 (]: Writing runtime sql for node "test.velov.not_null_stg_station_status_reported_at.f45832c796"
+[0m15:17:25.177254 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_stg_station_status_reported_at.f45832c796"
+[0m15:17:25.177766 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_status_reported_at.f45832c796: BEGIN
+[0m15:17:25.177766 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:17:25.178834 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.179388 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_stg_station_status_reported_at.f45832c796"
+[0m15:17:25.179388 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_status_reported_at.f45832c796: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "test.velov.not_null_stg_station_status_reported_at.f45832c796"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select reported_at
+from "velov"."main"."stg_station_status"
+where reported_at is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m15:17:25.199087 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m15:17:25.200629 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_status_reported_at.f45832c796: ROLLBACK
+[0m15:17:25.201637 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_status_reported_at.f45832c796: Close
+[0m15:17:25.201637 [info ] [Thread-1 (]: 7 of 13 PASS not_null_stg_station_status_reported_at ........................... [[32mPASS[0m in 0.03s]
+[0m15:17:25.202633 [debug] [Thread-1 (]: Finished running node test.velov.not_null_stg_station_status_reported_at.f45832c796
+[0m15:17:25.202633 [debug] [Thread-1 (]: Began running node test.velov.not_null_stg_station_status_station_id.659179a9e2
+[0m15:17:25.203204 [info ] [Thread-1 (]: 8 of 13 START test not_null_stg_station_status_station_id ...................... [RUN]
+[0m15:17:25.204280 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.velov.not_null_stg_station_status_reported_at.f45832c796, now test.velov.not_null_stg_station_status_station_id.659179a9e2)
+[0m15:17:25.204815 [debug] [Thread-1 (]: Began compiling node test.velov.not_null_stg_station_status_station_id.659179a9e2
+[0m15:17:25.209105 [debug] [Thread-1 (]: Writing injected SQL for node "test.velov.not_null_stg_station_status_station_id.659179a9e2"
+[0m15:17:25.209105 [debug] [Thread-1 (]: Began executing node test.velov.not_null_stg_station_status_station_id.659179a9e2
+[0m15:17:25.210752 [debug] [Thread-1 (]: Writing runtime sql for node "test.velov.not_null_stg_station_status_station_id.659179a9e2"
+[0m15:17:25.211884 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_stg_station_status_station_id.659179a9e2"
+[0m15:17:25.212471 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_status_station_id.659179a9e2: BEGIN
+[0m15:17:25.212471 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:17:25.213010 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.213537 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_stg_station_status_station_id.659179a9e2"
+[0m15:17:25.213537 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_status_station_id.659179a9e2: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "test.velov.not_null_stg_station_status_station_id.659179a9e2"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select station_id
+from "velov"."main"."stg_station_status"
+where station_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m15:17:25.233738 [debug] [Thread-1 (]: SQL status: OK in 0.020 seconds
+[0m15:17:25.235742 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_status_station_id.659179a9e2: ROLLBACK
+[0m15:17:25.235742 [debug] [Thread-1 (]: On test.velov.not_null_stg_station_status_station_id.659179a9e2: Close
+[0m15:17:25.236739 [info ] [Thread-1 (]: 8 of 13 PASS not_null_stg_station_status_station_id ............................ [[32mPASS[0m in 0.03s]
+[0m15:17:25.237312 [debug] [Thread-1 (]: Finished running node test.velov.not_null_stg_station_status_station_id.659179a9e2
+[0m15:17:25.238359 [debug] [Thread-1 (]: Began running node model.velov.station_hourly
+[0m15:17:25.238359 [info ] [Thread-1 (]: 9 of 13 START sql table model main.station_hourly .............................. [RUN]
+[0m15:17:25.238889 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.velov.not_null_stg_station_status_station_id.659179a9e2, now model.velov.station_hourly)
+[0m15:17:25.239402 [debug] [Thread-1 (]: Began compiling node model.velov.station_hourly
+[0m15:17:25.241004 [debug] [Thread-1 (]: Writing injected SQL for node "model.velov.station_hourly"
+[0m15:17:25.242049 [debug] [Thread-1 (]: Began executing node model.velov.station_hourly
+[0m15:17:25.273340 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:17:25.273340 [debug] [Thread-1 (]: On model.velov.station_hourly: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.station_hourly"} */
+DESCRIBE (select * from (
+        -- valeur à l'heure h : dernier relevé dans ]h - 1 h, h]
+with hourly as (
+    select
+        s.station_id,
+        date_trunc('hour', s.reported_at - interval 1 microsecond) + interval 1 hour as hour_ts,
+        i.capacity,
+        s.bikes_available,
+        s.reported_at
+    from "velov"."main"."stg_station_status" s
+    join "velov"."main"."stg_station_information" i using (station_id)
+)
+select
+    station_id,
+    hour_ts as timestamp,
+    cast(capacity as integer) as capacity,
+    cast(bikes_available as integer) as bikes_available
+from hourly
+qualify row_number() over (
+    partition by station_id, hour_ts
+    order by reported_at desc
+) = 1
+    ) as __dbt_sbq
+    where false
+    limit 0
+)
+[0m15:17:25.274336 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:17:25.288835 [debug] [Thread-1 (]: SQL status: OK in 0.015 seconds
+[0m15:17:25.297860 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:17:25.297860 [debug] [Thread-1 (]: On model.velov.station_hourly: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.station_hourly"} */
+DESCRIBE (select * from (
+        select
+    
+      
+    cast(null as integer)
+ as station_id, 
+      
+    cast(null as timestamp with time zone)
+ as timestamp, 
+      
+    cast(null as integer)
+ as capacity, 
+      
+    cast(null as integer)
+ as bikes_available
+    ) as __dbt_sbq
+    where false
+    limit 0
+)
+[0m15:17:25.298858 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.316940 [debug] [Thread-1 (]: Writing runtime sql for node "model.velov.station_hourly"
+[0m15:17:25.317923 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:17:25.317923 [debug] [Thread-1 (]: On model.velov.station_hourly: BEGIN
+[0m15:17:25.318945 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m15:17:25.318945 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:17:25.318945 [debug] [Thread-1 (]: On model.velov.station_hourly: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.station_hourly"} */
+
+    
+      
+    
+
+    create  table
+      "velov"."main"."station_hourly__dbt_tmp"
+  
+  (
+    station_id integer not null,
+    timestamp timestamp with time zone not null,
+    capacity integer not null,
+    bikes_available integer not null
+    
+    )
+ ;
+    
+    
+    insert into "velov"."main"."station_hourly__dbt_tmp" 
+  (
+    
+      
+      station_id ,
+    
+      
+      timestamp ,
+    
+      
+      capacity ,
+    
+      
+      bikes_available 
+    
+  )
+ (
+      
+    select station_id, timestamp, capacity, bikes_available
+    from (
+        -- valeur à l'heure h : dernier relevé dans ]h - 1 h, h]
+with hourly as (
+    select
+        s.station_id,
+        date_trunc('hour', s.reported_at - interval 1 microsecond) + interval 1 hour as hour_ts,
+        i.capacity,
+        s.bikes_available,
+        s.reported_at
+    from "velov"."main"."stg_station_status" s
+    join "velov"."main"."stg_station_information" i using (station_id)
+)
+select
+    station_id,
+    hour_ts as timestamp,
+    cast(capacity as integer) as capacity,
+    cast(bikes_available as integer) as bikes_available
+from hourly
+qualify row_number() over (
+    partition by station_id, hour_ts
+    order by reported_at desc
+) = 1
+    ) as model_subq
+    );
+  
+[0m15:17:25.353826 [debug] [Thread-1 (]: SQL status: OK in 0.034 seconds
+[0m15:17:25.356008 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:17:25.356557 [debug] [Thread-1 (]: On model.velov.station_hourly: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.station_hourly"} */
+alter table "velov"."main"."station_hourly__dbt_tmp" rename to "station_hourly"
+[0m15:17:25.357083 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.360332 [debug] [Thread-1 (]: On model.velov.station_hourly: COMMIT
+[0m15:17:25.360332 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:17:25.360872 [debug] [Thread-1 (]: On model.velov.station_hourly: COMMIT
+[0m15:17:25.364139 [debug] [Thread-1 (]: SQL status: OK in 0.003 seconds
+[0m15:17:25.365218 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:17:25.365218 [debug] [Thread-1 (]: On model.velov.station_hourly: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.station_hourly"} */
+
+      drop table if exists "velov"."main"."station_hourly__dbt_backup" cascade
+    
+[0m15:17:25.366226 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m15:17:25.367225 [debug] [Thread-1 (]: On model.velov.station_hourly: Close
+[0m15:17:25.367225 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '60dae89c-5827-4aa0-8a56-0f9bea9c2d08', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E92434EAB0>]}
+[0m15:17:25.367225 [info ] [Thread-1 (]: 9 of 13 OK created sql table model main.station_hourly ......................... [[32mOK[0m in 0.13s]
+[0m15:17:25.368225 [debug] [Thread-1 (]: Finished running node model.velov.station_hourly
+[0m15:17:25.368847 [debug] [Thread-1 (]: Began running node test.velov.not_null_station_hourly_bikes_available.2e0ac15820
+[0m15:17:25.368847 [info ] [Thread-1 (]: 10 of 13 START test not_null_station_hourly_bikes_available .................... [RUN]
+[0m15:17:25.369417 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.velov.station_hourly, now test.velov.not_null_station_hourly_bikes_available.2e0ac15820)
+[0m15:17:25.369943 [debug] [Thread-1 (]: Began compiling node test.velov.not_null_station_hourly_bikes_available.2e0ac15820
+[0m15:17:25.375064 [debug] [Thread-1 (]: Writing injected SQL for node "test.velov.not_null_station_hourly_bikes_available.2e0ac15820"
+[0m15:17:25.375658 [debug] [Thread-1 (]: Began executing node test.velov.not_null_station_hourly_bikes_available.2e0ac15820
+[0m15:17:25.376739 [debug] [Thread-1 (]: Writing runtime sql for node "test.velov.not_null_station_hourly_bikes_available.2e0ac15820"
+[0m15:17:25.377258 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_station_hourly_bikes_available.2e0ac15820"
+[0m15:17:25.377810 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_bikes_available.2e0ac15820: BEGIN
+[0m15:17:25.377810 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:17:25.378860 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.378860 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_station_hourly_bikes_available.2e0ac15820"
+[0m15:17:25.379411 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_bikes_available.2e0ac15820: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "test.velov.not_null_station_hourly_bikes_available.2e0ac15820"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select bikes_available
+from "velov"."main"."station_hourly"
+where bikes_available is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m15:17:25.380471 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.381563 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_bikes_available.2e0ac15820: ROLLBACK
+[0m15:17:25.381563 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_bikes_available.2e0ac15820: Close
+[0m15:17:25.382570 [info ] [Thread-1 (]: 10 of 13 PASS not_null_station_hourly_bikes_available .......................... [[32mPASS[0m in 0.01s]
+[0m15:17:25.383217 [debug] [Thread-1 (]: Finished running node test.velov.not_null_station_hourly_bikes_available.2e0ac15820
+[0m15:17:25.383217 [debug] [Thread-1 (]: Began running node test.velov.not_null_station_hourly_capacity.f8f0dfc9a0
+[0m15:17:25.383721 [info ] [Thread-1 (]: 11 of 13 START test not_null_station_hourly_capacity ........................... [RUN]
+[0m15:17:25.383721 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.velov.not_null_station_hourly_bikes_available.2e0ac15820, now test.velov.not_null_station_hourly_capacity.f8f0dfc9a0)
+[0m15:17:25.384239 [debug] [Thread-1 (]: Began compiling node test.velov.not_null_station_hourly_capacity.f8f0dfc9a0
+[0m15:17:25.389086 [debug] [Thread-1 (]: Writing injected SQL for node "test.velov.not_null_station_hourly_capacity.f8f0dfc9a0"
+[0m15:17:25.390197 [debug] [Thread-1 (]: Began executing node test.velov.not_null_station_hourly_capacity.f8f0dfc9a0
+[0m15:17:25.391324 [debug] [Thread-1 (]: Writing runtime sql for node "test.velov.not_null_station_hourly_capacity.f8f0dfc9a0"
+[0m15:17:25.392413 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_station_hourly_capacity.f8f0dfc9a0"
+[0m15:17:25.392413 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_capacity.f8f0dfc9a0: BEGIN
+[0m15:17:25.392936 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:17:25.393461 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.393980 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_station_hourly_capacity.f8f0dfc9a0"
+[0m15:17:25.394514 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_capacity.f8f0dfc9a0: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "test.velov.not_null_station_hourly_capacity.f8f0dfc9a0"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select capacity
+from "velov"."main"."station_hourly"
+where capacity is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m15:17:25.396175 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.397241 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_capacity.f8f0dfc9a0: ROLLBACK
+[0m15:17:25.398356 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_capacity.f8f0dfc9a0: Close
+[0m15:17:25.398882 [info ] [Thread-1 (]: 11 of 13 PASS not_null_station_hourly_capacity ................................. [[32mPASS[0m in 0.01s]
+[0m15:17:25.398882 [debug] [Thread-1 (]: Finished running node test.velov.not_null_station_hourly_capacity.f8f0dfc9a0
+[0m15:17:25.399506 [debug] [Thread-1 (]: Began running node test.velov.not_null_station_hourly_station_id.69920bd2d8
+[0m15:17:25.399506 [info ] [Thread-1 (]: 12 of 13 START test not_null_station_hourly_station_id ......................... [RUN]
+[0m15:17:25.400035 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.velov.not_null_station_hourly_capacity.f8f0dfc9a0, now test.velov.not_null_station_hourly_station_id.69920bd2d8)
+[0m15:17:25.400035 [debug] [Thread-1 (]: Began compiling node test.velov.not_null_station_hourly_station_id.69920bd2d8
+[0m15:17:25.404982 [debug] [Thread-1 (]: Writing injected SQL for node "test.velov.not_null_station_hourly_station_id.69920bd2d8"
+[0m15:17:25.405538 [debug] [Thread-1 (]: Began executing node test.velov.not_null_station_hourly_station_id.69920bd2d8
+[0m15:17:25.407141 [debug] [Thread-1 (]: Writing runtime sql for node "test.velov.not_null_station_hourly_station_id.69920bd2d8"
+[0m15:17:25.407660 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_station_hourly_station_id.69920bd2d8"
+[0m15:17:25.408185 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_station_id.69920bd2d8: BEGIN
+[0m15:17:25.408185 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:17:25.408732 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.409278 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_station_hourly_station_id.69920bd2d8"
+[0m15:17:25.409278 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_station_id.69920bd2d8: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "test.velov.not_null_station_hourly_station_id.69920bd2d8"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select station_id
+from "velov"."main"."station_hourly"
+where station_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m15:17:25.410336 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.412411 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_station_id.69920bd2d8: ROLLBACK
+[0m15:17:25.413067 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_station_id.69920bd2d8: Close
+[0m15:17:25.413573 [info ] [Thread-1 (]: 12 of 13 PASS not_null_station_hourly_station_id ............................... [[32mPASS[0m in 0.01s]
+[0m15:17:25.414099 [debug] [Thread-1 (]: Finished running node test.velov.not_null_station_hourly_station_id.69920bd2d8
+[0m15:17:25.414621 [debug] [Thread-1 (]: Began running node test.velov.not_null_station_hourly_timestamp.6fa8f101d9
+[0m15:17:25.414621 [info ] [Thread-1 (]: 13 of 13 START test not_null_station_hourly_timestamp .......................... [RUN]
+[0m15:17:25.415138 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly test.velov.not_null_station_hourly_station_id.69920bd2d8, now test.velov.not_null_station_hourly_timestamp.6fa8f101d9)
+[0m15:17:25.415679 [debug] [Thread-1 (]: Began compiling node test.velov.not_null_station_hourly_timestamp.6fa8f101d9
+[0m15:17:25.423473 [debug] [Thread-1 (]: Writing injected SQL for node "test.velov.not_null_station_hourly_timestamp.6fa8f101d9"
+[0m15:17:25.424552 [debug] [Thread-1 (]: Began executing node test.velov.not_null_station_hourly_timestamp.6fa8f101d9
+[0m15:17:25.425655 [debug] [Thread-1 (]: Writing runtime sql for node "test.velov.not_null_station_hourly_timestamp.6fa8f101d9"
+[0m15:17:25.426720 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_station_hourly_timestamp.6fa8f101d9"
+[0m15:17:25.427727 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_timestamp.6fa8f101d9: BEGIN
+[0m15:17:25.427727 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:17:25.428730 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.429727 [debug] [Thread-1 (]: Using duckdb connection "test.velov.not_null_station_hourly_timestamp.6fa8f101d9"
+[0m15:17:25.429727 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_timestamp.6fa8f101d9: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "test.velov.not_null_station_hourly_timestamp.6fa8f101d9"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select timestamp
+from "velov"."main"."station_hourly"
+where timestamp is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m15:17:25.430728 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:17:25.432726 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_timestamp.6fa8f101d9: ROLLBACK
+[0m15:17:25.432726 [debug] [Thread-1 (]: On test.velov.not_null_station_hourly_timestamp.6fa8f101d9: Close
+[0m15:17:25.433727 [info ] [Thread-1 (]: 13 of 13 PASS not_null_station_hourly_timestamp ................................ [[32mPASS[0m in 0.02s]
+[0m15:17:25.433727 [debug] [Thread-1 (]: Finished running node test.velov.not_null_station_hourly_timestamp.6fa8f101d9
+[0m15:17:25.435562 [debug] [MainThread]: Using duckdb connection "master"
+[0m15:17:25.435562 [debug] [MainThread]: On master: BEGIN
+[0m15:17:25.436081 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m15:17:25.436597 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m15:17:25.437163 [debug] [MainThread]: On master: COMMIT
+[0m15:17:25.437163 [debug] [MainThread]: Using duckdb connection "master"
+[0m15:17:25.437714 [debug] [MainThread]: On master: COMMIT
+[0m15:17:25.438244 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m15:17:25.438244 [debug] [MainThread]: On master: Close
+[0m15:17:25.438761 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m15:17:25.438761 [debug] [MainThread]: Connection 'create_velov_main' was properly closed.
+[0m15:17:25.438761 [debug] [MainThread]: Connection 'list_velov_main' was properly closed.
+[0m15:17:25.439284 [debug] [MainThread]: Connection 'test.velov.not_null_station_hourly_timestamp.6fa8f101d9' was properly closed.
+[0m15:17:25.439284 [info ] [MainThread]: 
+[0m15:17:25.439284 [info ] [MainThread]: Finished running 1 table model, 10 data tests, 2 view models in 0 hours 0 minutes and 4.94 seconds (4.94s).
+[0m15:17:25.440876 [debug] [MainThread]: Command end result
+[0m15:17:25.461931 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\manifest.json
+[0m15:17:25.465655 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\semantic_manifest.json
+[0m15:17:25.468658 [debug] [MainThread]: Wrote artifact OsiDocument to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\osi_document.json
+[0m15:17:25.474697 [debug] [MainThread]: Wrote artifact RunExecutionResult to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\run_results.json
+[0m15:17:25.474697 [info ] [MainThread]: 
+[0m15:17:25.475228 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m15:17:25.475228 [info ] [MainThread]: 
+[0m15:17:25.475758 [info ] [MainThread]: Done. PASS=13 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=13
+[0m15:17:25.477472 [debug] [MainThread]: Command `dbt build` succeeded at 15:17:25.476953 after 9.23 seconds
+[0m15:17:25.477472 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E924C97AA0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E92814E5D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001E926C9D280>]}
+[0m15:17:25.478000 [debug] [MainThread]: Flushing usage events
+[0m15:17:26.120645 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:46:15.738131 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000127371473E0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000012735F46420>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001273704D490>]}
+
+
+============================== 15:46:15.741638 | dad2f3e2-28bb-4409-81af-7b47704c3710 ==============================
+[0m15:46:15.741638 [info ] [MainThread]: Running with dbt=1.12.6
+[0m15:46:15.742644 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'maximum_seed_size_mib': '1', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'version_check': 'True', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'False', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': '.', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'invocation_command': 'dbt build --profiles-dir .', 'hints_enabled': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'indirect_selection': 'eager', 'log_path': 'C:\\Users\\nolan\\DataEngM2\\IndusIA\\NOFAH\\velov_dbt\\logs'}
+[0m15:46:15.937547 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'dad2f3e2-28bb-4409-81af-7b47704c3710', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000127328B9070>]}
+[0m15:46:15.983084 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'dad2f3e2-28bb-4409-81af-7b47704c3710', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000012735985880>]}
+[0m15:46:15.985084 [info ] [MainThread]: Registered adapter: duckdb=1.11.0
+[0m15:46:16.220595 [debug] [MainThread]: checksum: abec6bb70da8a12e11f6192bd639488c496bdb93b0be293d51fce7e3613962e3, vars: {}, profile: velov, target: dev, version: 1.12.6
+[0m15:46:16.324901 [debug] [MainThread]: Partial parsing enabled: 1 files deleted, 0 files added, 1 files changed.
+[0m15:46:16.325904 [debug] [MainThread]: Partial parsing: updated file: velov://models\schema.yml
+[0m15:46:16.325904 [debug] [MainThread]: Partial parsing: deleted file: velov://tests\bikes_within_capacity.sql
+[0m15:46:16.702127 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'dad2f3e2-28bb-4409-81af-7b47704c3710', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001273945BFB0>]}
+[0m15:46:16.744807 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\manifest.json
+[0m15:46:16.747196 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\semantic_manifest.json
+[0m15:46:16.767840 [debug] [MainThread]: Wrote artifact OsiDocument to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\osi_document.json
+[0m15:46:16.787375 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'dad2f3e2-28bb-4409-81af-7b47704c3710', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000127397F4770>]}
+[0m15:46:16.788367 [info ] [MainThread]: Found 3 models, 500 macros
+[0m15:46:16.789755 [info ] [MainThread]: 
+[0m15:46:16.789755 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m15:46:16.790288 [info ] [MainThread]: 
+[0m15:46:16.790802 [debug] [MainThread]: Acquiring new duckdb connection 'master'
+[0m15:46:16.795144 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_velov'
+[0m15:46:16.923755 [debug] [ThreadPool]: Using duckdb connection "list_velov"
+[0m15:46:16.923755 [debug] [ThreadPool]: On list_velov: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "connection_name": "list_velov"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"velov"'
+    
+  
+  
+[0m15:46:16.924750 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:46:16.961920 [debug] [ThreadPool]: SQL status: OK in 0.037 seconds
+[0m15:46:16.962921 [debug] [ThreadPool]: On list_velov: Close
+[0m15:46:16.963908 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_velov, now create_velov_main)
+[0m15:46:16.963908 [debug] [ThreadPool]: Creating schema "database: "velov"
+schema: "main"
+"
+[0m15:46:16.968908 [debug] [ThreadPool]: Using duckdb connection "create_velov_main"
+[0m15:46:16.969910 [debug] [ThreadPool]: On create_velov_main: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "connection_name": "create_velov_main"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='velov'
+        and type != 'duckdb'
+    
+  
+[0m15:46:16.969910 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m15:46:16.970912 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m15:46:16.971930 [debug] [ThreadPool]: Using duckdb connection "create_velov_main"
+[0m15:46:16.971930 [debug] [ThreadPool]: On create_velov_main: BEGIN
+[0m15:46:16.971930 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m15:46:16.972912 [debug] [ThreadPool]: Using duckdb connection "create_velov_main"
+[0m15:46:16.972912 [debug] [ThreadPool]: On create_velov_main: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "connection_name": "create_velov_main"} */
+
+    
+    
+        create schema if not exists "velov"."main"
+    
+[0m15:46:16.972912 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m15:46:16.973912 [debug] [ThreadPool]: On create_velov_main: COMMIT
+[0m15:46:16.974908 [debug] [ThreadPool]: Using duckdb connection "create_velov_main"
+[0m15:46:16.974908 [debug] [ThreadPool]: On create_velov_main: COMMIT
+[0m15:46:16.975908 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m15:46:16.975908 [debug] [ThreadPool]: On create_velov_main: Close
+[0m15:46:16.976911 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_velov_main'
+[0m15:46:16.979927 [debug] [ThreadPool]: Using duckdb connection "list_velov_main"
+[0m15:46:16.979927 [debug] [ThreadPool]: On list_velov_main: BEGIN
+[0m15:46:16.980926 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m15:46:16.980926 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m15:46:16.980926 [debug] [ThreadPool]: Using duckdb connection "list_velov_main"
+[0m15:46:16.980926 [debug] [ThreadPool]: On list_velov_main: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "connection_name": "list_velov_main"} */
+select
+      'velov' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main'
+    and lower(table_catalog) = 'velov'
+  
+[0m15:46:16.994458 [debug] [ThreadPool]: SQL status: OK in 0.013 seconds
+[0m15:46:16.995972 [debug] [ThreadPool]: On list_velov_main: ROLLBACK
+[0m15:46:16.996999 [debug] [ThreadPool]: On list_velov_main: Close
+[0m15:46:16.997977 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'dad2f3e2-28bb-4409-81af-7b47704c3710', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000012737B48BC0>]}
+[0m15:46:16.997977 [debug] [MainThread]: Using duckdb connection "master"
+[0m15:46:16.997977 [debug] [MainThread]: On master: BEGIN
+[0m15:46:16.997977 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m15:46:16.999572 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m15:46:16.999572 [debug] [MainThread]: On master: COMMIT
+[0m15:46:17.000580 [debug] [MainThread]: Using duckdb connection "master"
+[0m15:46:17.000580 [debug] [MainThread]: On master: COMMIT
+[0m15:46:17.000580 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m15:46:17.000580 [debug] [MainThread]: On master: Close
+[0m15:46:17.004585 [debug] [Thread-1 (]: Began running node model.velov.stg_station_information
+[0m15:46:17.004585 [info ] [Thread-1 (]: 1 of 3 START sql view model main.stg_station_information ....................... [RUN]
+[0m15:46:17.005587 [debug] [Thread-1 (]: Acquiring new duckdb connection 'model.velov.stg_station_information'
+[0m15:46:17.005587 [debug] [Thread-1 (]: Began compiling node model.velov.stg_station_information
+[0m15:46:17.009905 [debug] [Thread-1 (]: Writing injected SQL for node "model.velov.stg_station_information"
+[0m15:46:17.010437 [debug] [Thread-1 (]: Began executing node model.velov.stg_station_information
+[0m15:46:17.028488 [debug] [Thread-1 (]: Writing runtime sql for node "model.velov.stg_station_information"
+[0m15:46:17.030047 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_information"
+[0m15:46:17.030047 [debug] [Thread-1 (]: On model.velov.stg_station_information: BEGIN
+[0m15:46:17.030047 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m15:46:17.031056 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:46:17.031056 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_information"
+[0m15:46:17.031056 [debug] [Thread-1 (]: On model.velov.stg_station_information: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_information"} */
+
+  
+  create view "velov"."main"."stg_station_information__dbt_tmp" as (
+    select
+    cast(s.station_id as integer) as station_id,
+    s.name                        as name,
+    cast(s.capacity as integer)   as capacity
+from (
+    select unnest(data.stations) as s
+    from read_json('../data/bronze/station_information/*/*.json')
+)
+qualify row_number() over (
+    partition by s.station_id
+    order by s.name
+) = 1
+  );
+
+[0m15:46:17.039058 [debug] [Thread-1 (]: SQL status: OK in 0.007 seconds
+[0m15:46:17.043059 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_information"
+[0m15:46:17.043059 [debug] [Thread-1 (]: On model.velov.stg_station_information: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_information"} */
+alter view "velov"."main"."stg_station_information" rename to "stg_station_information__dbt_backup"
+[0m15:46:17.044060 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m15:46:17.045060 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_information"
+[0m15:46:17.045060 [debug] [Thread-1 (]: On model.velov.stg_station_information: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_information"} */
+alter view "velov"."main"."stg_station_information__dbt_tmp" rename to "stg_station_information"
+[0m15:46:17.046060 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m15:46:17.054076 [debug] [Thread-1 (]: On model.velov.stg_station_information: COMMIT
+[0m15:46:17.055079 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_information"
+[0m15:46:17.055079 [debug] [Thread-1 (]: On model.velov.stg_station_information: COMMIT
+[0m15:46:17.059086 [debug] [Thread-1 (]: SQL status: OK in 0.003 seconds
+[0m15:46:17.062665 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_information"
+[0m15:46:17.062665 [debug] [Thread-1 (]: On model.velov.stg_station_information: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_information"} */
+
+      drop view if exists "velov"."main"."stg_station_information__dbt_backup" cascade
+    
+[0m15:46:17.063650 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:46:17.065647 [debug] [Thread-1 (]: On model.velov.stg_station_information: Close
+[0m15:46:17.066649 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'dad2f3e2-28bb-4409-81af-7b47704c3710', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000127394DF4D0>]}
+[0m15:46:17.067648 [info ] [Thread-1 (]: 1 of 3 OK created sql view model main.stg_station_information .................. [[32mOK[0m in 0.06s]
+[0m15:46:17.068364 [debug] [Thread-1 (]: Finished running node model.velov.stg_station_information
+[0m15:46:17.068364 [debug] [Thread-1 (]: Began running node model.velov.stg_station_status
+[0m15:46:17.068869 [info ] [Thread-1 (]: 2 of 3 START sql view model main.stg_station_status ............................ [RUN]
+[0m15:46:17.069467 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.velov.stg_station_information, now model.velov.stg_station_status)
+[0m15:46:17.069994 [debug] [Thread-1 (]: Began compiling node model.velov.stg_station_status
+[0m15:46:17.071024 [debug] [Thread-1 (]: Writing injected SQL for node "model.velov.stg_station_status"
+[0m15:46:17.071548 [debug] [Thread-1 (]: Began executing node model.velov.stg_station_status
+[0m15:46:17.073697 [debug] [Thread-1 (]: Writing runtime sql for node "model.velov.stg_station_status"
+[0m15:46:17.074239 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_status"
+[0m15:46:17.074793 [debug] [Thread-1 (]: On model.velov.stg_station_status: BEGIN
+[0m15:46:17.075341 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:46:17.075861 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:46:17.075861 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_status"
+[0m15:46:17.076415 [debug] [Thread-1 (]: On model.velov.stg_station_status: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_status"} */
+
+  
+  create view "velov"."main"."stg_station_status__dbt_tmp" as (
+    select
+    cast(s.station_id as integer)  as station_id,
+    to_timestamp(s.last_reported)  as reported_at,
+    to_timestamp(last_updated)     as feed_updated_at,
+    s.num_bikes_available          as bikes_available,
+    s.is_installed = 1             as is_installed
+from (
+    select last_updated, unnest(data.stations) as s
+    from read_json('../data/bronze/station_status/*/*.json')
+)
+qualify row_number() over (
+    partition by s.station_id, s.last_reported
+    order by last_updated) = 1
+  );
+
+[0m15:46:17.086309 [debug] [Thread-1 (]: SQL status: OK in 0.010 seconds
+[0m15:46:17.088309 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_status"
+[0m15:46:17.088309 [debug] [Thread-1 (]: On model.velov.stg_station_status: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_status"} */
+alter view "velov"."main"."stg_station_status" rename to "stg_station_status__dbt_backup"
+[0m15:46:17.089311 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m15:46:17.090310 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_status"
+[0m15:46:17.090310 [debug] [Thread-1 (]: On model.velov.stg_station_status: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_status"} */
+alter view "velov"."main"."stg_station_status__dbt_tmp" rename to "stg_station_status"
+[0m15:46:17.091312 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:46:17.093309 [debug] [Thread-1 (]: On model.velov.stg_station_status: COMMIT
+[0m15:46:17.093309 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_status"
+[0m15:46:17.093309 [debug] [Thread-1 (]: On model.velov.stg_station_status: COMMIT
+[0m15:46:17.095309 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:46:17.096327 [debug] [Thread-1 (]: Using duckdb connection "model.velov.stg_station_status"
+[0m15:46:17.096327 [debug] [Thread-1 (]: On model.velov.stg_station_status: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.stg_station_status"} */
+
+      drop view if exists "velov"."main"."stg_station_status__dbt_backup" cascade
+    
+[0m15:46:17.097308 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:46:17.098337 [debug] [Thread-1 (]: On model.velov.stg_station_status: Close
+[0m15:46:17.098337 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'dad2f3e2-28bb-4409-81af-7b47704c3710', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000127397A16D0>]}
+[0m15:46:17.098337 [info ] [Thread-1 (]: 2 of 3 OK created sql view model main.stg_station_status ....................... [[32mOK[0m in 0.03s]
+[0m15:46:17.100023 [debug] [Thread-1 (]: Finished running node model.velov.stg_station_status
+[0m15:46:17.100590 [debug] [Thread-1 (]: Began running node model.velov.station_hourly
+[0m15:46:17.101111 [info ] [Thread-1 (]: 3 of 3 START sql table model main.station_hourly ............................... [RUN]
+[0m15:46:17.101634 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.velov.stg_station_status, now model.velov.station_hourly)
+[0m15:46:17.101634 [debug] [Thread-1 (]: Began compiling node model.velov.station_hourly
+[0m15:46:17.103196 [debug] [Thread-1 (]: Writing injected SQL for node "model.velov.station_hourly"
+[0m15:46:17.104238 [debug] [Thread-1 (]: Began executing node model.velov.station_hourly
+[0m15:46:17.134515 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:46:17.134515 [debug] [Thread-1 (]: On model.velov.station_hourly: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.station_hourly"} */
+DESCRIBE (select * from (
+        -- valeur à l'heure h : dernier relevé dans ]h - 1 h, h]
+with hourly as (
+    select
+        s.station_id,
+        date_trunc('hour', s.reported_at - interval 1 microsecond) + interval 1 hour as hour_ts,
+        i.capacity,
+        s.bikes_available,
+        s.reported_at
+    from "velov"."main"."stg_station_status" s
+    join "velov"."main"."stg_station_information" i using (station_id)
+)
+select
+    station_id,
+    hour_ts as timestamp,
+    cast(capacity as integer) as capacity,
+    cast(bikes_available as integer) as bikes_available
+from hourly
+qualify row_number() over (
+    partition by station_id, hour_ts
+    order by reported_at desc
+) = 1
+    ) as __dbt_sbq
+    where false
+    limit 0
+)
+[0m15:46:17.135536 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m15:46:17.149522 [debug] [Thread-1 (]: SQL status: OK in 0.014 seconds
+[0m15:46:17.156033 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:46:17.157034 [debug] [Thread-1 (]: On model.velov.station_hourly: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.station_hourly"} */
+DESCRIBE (select * from (
+        select
+    
+      
+    cast(null as integer)
+ as station_id, 
+      
+    cast(null as timestamp with time zone)
+ as timestamp, 
+      
+    cast(null as integer)
+ as capacity, 
+      
+    cast(null as integer)
+ as bikes_available
+    ) as __dbt_sbq
+    where false
+    limit 0
+)
+[0m15:46:17.158039 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:46:17.170041 [debug] [Thread-1 (]: Writing runtime sql for node "model.velov.station_hourly"
+[0m15:46:17.171057 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:46:17.171057 [debug] [Thread-1 (]: On model.velov.station_hourly: BEGIN
+[0m15:46:17.172043 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m15:46:17.172043 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:46:17.172043 [debug] [Thread-1 (]: On model.velov.station_hourly: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.station_hourly"} */
+
+    
+      
+    
+
+    create  table
+      "velov"."main"."station_hourly__dbt_tmp"
+  
+  (
+    station_id integer,
+    timestamp timestamp with time zone,
+    capacity integer,
+    bikes_available integer
+    
+    )
+ ;
+    
+    
+    insert into "velov"."main"."station_hourly__dbt_tmp" 
+  (
+    
+      
+      station_id ,
+    
+      
+      timestamp ,
+    
+      
+      capacity ,
+    
+      
+      bikes_available 
+    
+  )
+ (
+      
+    select station_id, timestamp, capacity, bikes_available
+    from (
+        -- valeur à l'heure h : dernier relevé dans ]h - 1 h, h]
+with hourly as (
+    select
+        s.station_id,
+        date_trunc('hour', s.reported_at - interval 1 microsecond) + interval 1 hour as hour_ts,
+        i.capacity,
+        s.bikes_available,
+        s.reported_at
+    from "velov"."main"."stg_station_status" s
+    join "velov"."main"."stg_station_information" i using (station_id)
+)
+select
+    station_id,
+    hour_ts as timestamp,
+    cast(capacity as integer) as capacity,
+    cast(bikes_available as integer) as bikes_available
+from hourly
+qualify row_number() over (
+    partition by station_id, hour_ts
+    order by reported_at desc
+) = 1
+    ) as model_subq
+    );
+  
+[0m15:46:17.206977 [debug] [Thread-1 (]: SQL status: OK in 0.034 seconds
+[0m15:46:17.210979 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:46:17.210979 [debug] [Thread-1 (]: On model.velov.station_hourly: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.station_hourly"} */
+
+    SELECT index_name
+    FROM duckdb_indexes()
+    WHERE database_name = 'velov'
+      AND schema_name = 'main'
+      AND table_name = 'station_hourly'
+  
+[0m15:46:17.211980 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:46:17.213977 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:46:17.213977 [debug] [Thread-1 (]: On model.velov.station_hourly: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.station_hourly"} */
+alter table "velov"."main"."station_hourly" rename to "station_hourly__dbt_backup"
+[0m15:46:17.214994 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m15:46:17.215979 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:46:17.216978 [debug] [Thread-1 (]: On model.velov.station_hourly: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.station_hourly"} */
+alter table "velov"."main"."station_hourly__dbt_tmp" rename to "station_hourly"
+[0m15:46:17.216978 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m15:46:17.220490 [debug] [Thread-1 (]: On model.velov.station_hourly: COMMIT
+[0m15:46:17.220490 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:46:17.220490 [debug] [Thread-1 (]: On model.velov.station_hourly: COMMIT
+[0m15:46:17.222490 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:46:17.224491 [debug] [Thread-1 (]: Using duckdb connection "model.velov.station_hourly"
+[0m15:46:17.224491 [debug] [Thread-1 (]: On model.velov.station_hourly: /* {"app": "dbt", "dbt_version": "1.12.6", "profile_name": "velov", "target_name": "dev", "node_id": "model.velov.station_hourly"} */
+
+      drop table if exists "velov"."main"."station_hourly__dbt_backup" cascade
+    
+[0m15:46:17.226492 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m15:46:17.227493 [debug] [Thread-1 (]: On model.velov.station_hourly: Close
+[0m15:46:17.227493 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'dad2f3e2-28bb-4409-81af-7b47704c3710', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000012739BE3710>]}
+[0m15:46:17.227493 [info ] [Thread-1 (]: 3 of 3 OK created sql table model main.station_hourly .......................... [[32mOK[0m in 0.13s]
+[0m15:46:17.228481 [debug] [Thread-1 (]: Finished running node model.velov.station_hourly
+[0m15:46:17.229507 [debug] [MainThread]: Using duckdb connection "master"
+[0m15:46:17.230023 [debug] [MainThread]: On master: BEGIN
+[0m15:46:17.230023 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m15:46:17.231105 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m15:46:17.231105 [debug] [MainThread]: On master: COMMIT
+[0m15:46:17.231660 [debug] [MainThread]: Using duckdb connection "master"
+[0m15:46:17.231660 [debug] [MainThread]: On master: COMMIT
+[0m15:46:17.232196 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m15:46:17.232755 [debug] [MainThread]: On master: Close
+[0m15:46:17.233293 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m15:46:17.233293 [debug] [MainThread]: Connection 'create_velov_main' was properly closed.
+[0m15:46:17.233293 [debug] [MainThread]: Connection 'list_velov_main' was properly closed.
+[0m15:46:17.233820 [debug] [MainThread]: Connection 'model.velov.station_hourly' was properly closed.
+[0m15:46:17.233820 [info ] [MainThread]: 
+[0m15:46:17.234356 [info ] [MainThread]: Finished running 1 table model, 2 view models in 0 hours 0 minutes and 0.44 seconds (0.44s).
+[0m15:46:17.234888 [debug] [MainThread]: Command end result
+[0m15:46:17.253271 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\manifest.json
+[0m15:46:17.256270 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\semantic_manifest.json
+[0m15:46:17.259278 [debug] [MainThread]: Wrote artifact OsiDocument to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\osi_document.json
+[0m15:46:17.264785 [debug] [MainThread]: Wrote artifact RunExecutionResult to C:\Users\nolan\DataEngM2\IndusIA\NOFAH\velov_dbt\target\run_results.json
+[0m15:46:17.264785 [info ] [MainThread]: 
+[0m15:46:17.266150 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m15:46:17.266656 [info ] [MainThread]: 
+[0m15:46:17.267190 [info ] [MainThread]: Done. PASS=3 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=3
+[0m15:46:17.268254 [debug] [MainThread]: Command `dbt build` succeeded at 15:46:17.268254 after 1.77 seconds
+[0m15:46:17.268254 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000012737AC7BC0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000012737147290>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000127371473E0>]}
+[0m15:46:17.268788 [debug] [MainThread]: Flushing usage events
+[0m15:46:17.859327 [debug] [MainThread]: An error was encountered while trying to flush usage events
