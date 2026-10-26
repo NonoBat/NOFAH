@@ -1,6 +1,15 @@
 version: 2
 
 models:
+  - name: stg_station_status
+    columns:
+      - name: station_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_station_information')
+              field: station_id
+
   - name: station_hourly
     config:
       contract:
@@ -8,9 +17,17 @@ models:
     columns:
       - name: station_id
         data_type: integer
+        tests:
+          - not_null
       - name: timestamp
         data_type: timestamp with time zone
+        tests:
+          - not_null
       - name: capacity
         data_type: integer
+        tests:
+          - not_null
       - name: bikes_available
         data_type: integer
+        tests:
+          - not_null
