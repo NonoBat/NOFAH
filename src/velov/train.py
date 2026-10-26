@@ -38,6 +38,43 @@ from velov.features import (
     make_training_frame,
 )
 
+import duckdb
+import pandera.pandas as pa
+from pandera.typing import Series
+
+class StationHourly(pa.DataFrameModel):
+    station_id: Series[int] = pa.Field(gt=0, coerce=True)
+    timestamp: Series[pd.DatetimeTZDtype] = pa.Field(
+        dtype_kwargs={"unit": "us", "tz": "UTC"}
+    )
+    capacity: Series[int] = pa.Field(ge=0, le=80, coerce=True)
+    bikes_available: Series[int] = pa.Field(ge=0, coerce=True)
+
+    @pa.dataframe_check
+    def bikes_le_capacity(cls, df: pd.DataFrame) -> Series[bool]:
+        return df["bikes_available"] <= df["capacity"]
+
+    class Config:
+        strict = False
+        unique = ["station_id", "timestamp"]
+
+
+def load_gold_table(db_path: Path = Path("velov.duckdb")) -> pd.DataFrame:
+    if not db_path.exists():
+        raise FileNotFoundError(f"{db_path} introuvable : exécuter d'abord `dbt build`")
+
+    con = duckdb.connect(str(db_path), read_only=True)
+    try:
+        df = con.sql("select * from station_hourly").df()
+    finally:
+        con.close()
+
+    df["timestamp"] = df["timestamp"].dt.tz_convert("UTC")
+
+    StationHourly.validate(df)
+    return df
+
+
 MODEL_FILENAME = "model.joblib"
 METADATA_FILENAME = "metadata.json"
 SKOPS_TRUSTED_TYPES = ["sklearn.ensemble._hist_gradient_boosting.predictor.TreePredictor"]
@@ -73,17 +110,23 @@ def temporal_split(df: pd.DataFrame, test_days: int) -> tuple[pd.DataFrame, pd.D
 
 
 def train(
-    data_path: Path,
+    data_path: Path | None,
     out_dir: Path,
     version: str = "0.1.0",
     test_days: int = 14,
     seed: int = 42,
+    raw_df: pd.DataFrame | None = None,
 ) -> dict:
     """Entraîne, évalue contre une baseline, écrit l'artefact. Retourne les métadonnées."""
-    if not data_path.exists():
-        raise FileNotFoundError(f"{data_path} introuvable : lancer d'abord `python -m velov.data`")
+    if raw_df is not None:
+        raw = raw_df
+        data_hash = "duckdb:station_hourly"
+    else:
+        if not data_path.exists():
+            raise FileNotFoundError(f"{data_path} introuvable : lancer d'abord `python -m velov.data`")
+        raw = pd.read_csv(data_path, parse_dates=["timestamp"])
+        data_hash = sha256_of(data_path)
 
-    raw = pd.read_csv(data_path, parse_dates=["timestamp"])
     frame = make_training_frame(raw)
     train_df, test_df = temporal_split(frame, test_days)
 
@@ -117,7 +160,7 @@ def train(
             "n_test": int(len(test_df)),
         },
         "artifact": {"file": MODEL_FILENAME, "sha256": sha256_of(model_path)},
-        "data_sha256": sha256_of(data_path),
+        "data_sha256": data_hash,
         "runtime": {
             "python": platform.python_version(),
             "scikit-learn": sklearn.__version__,
@@ -168,12 +211,20 @@ def log_to_mlflow(metadata: dict, out_dir: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Entraîne le modèle Vélo'v v0.")
     parser.add_argument("--data", type=Path, default=Path("data/velov_history.csv"))
+    parser.add_argument("--from-gold", action="store_true", help="lire la table gold DuckDB et valider Pandera")
+    parser.add_argument("--gold-db", type=Path, default=Path("velov.duckdb"), help="chemin vers velov.duckdb")
     parser.add_argument("--out", type=Path, default=Path("models"))
     parser.add_argument("--version", default="0.1.0")
     parser.add_argument("--mlflow", action="store_true", help="journaliser aussi dans MLflow")
     args = parser.parse_args()
 
-    metadata = train(args.data, args.out, version=args.version)
+    raw_df = None
+    if args.from_gold:
+        print(f"Chargement de la table gold depuis {args.gold_db} et validation Pandera...")
+        raw_df = load_gold_table(args.gold_db)
+        print(f"Table gold validée : {len(raw_df)} lignes conformes au contrat Pandera.")
+
+    metadata = train(args.data, args.out, version=args.version, raw_df=raw_df)
     m = metadata["metrics"]
     print(f"MAE modèle   : {m['mae_model']:.3f} vélos")
     print(f"MAE baseline : {m['mae_baseline_persistence']:.3f} vélos (persistance)")
