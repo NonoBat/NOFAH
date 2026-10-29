@@ -88,3 +88,25 @@ Ensuite pour lire la base de données, nous allons utiliser la commande docker e
 ```bash
 docker exec nofah-db-1 psql -U velov_user -d velov -c "SELECT * FROM predictions;"
 ```
+### Étape 2 : Tracer chaque entraînement
+
+Les runs sont tracés dans MLflow via `velov.tracking` (`velov.train --mlflow`) :
+
+| Catégorie | Contenu tracé |
+|---|---|
+| **Paramètres** | `seed`, `learning_rate`, `max_iter`, `test_days` |
+| **Métriques** | `mae_model`, `mae_baseline_persistence`, `mae_model_peak_hours` |
+| **Tags** | `git_commit`, `git_dirty`, `data_sha256` (empreinte triée), `data_period` (début/fin UTC) |
+| **Artefacts** | Modèle MLflow avec signature (format skops) + paquet `model.joblib` et `metadata.json` |
+
+```bash
+export MLFLOW_TRACKING_URI=http://127.0.0.1:5000
+python -m velov.data
+python -m velov.train --mlflow --seed 42
+python -m velov.train --mlflow --seed 7
+```
+
+**Écart de MAE entre les seeds 42 et 7 :**
+- **Seed 42 :** MAE modèle = **1.339** vélos (pointes = 1.430 vélos)
+- **Seed 7 :** MAE modèle = **1.345** vélos (pointes = 1.445 vélos)
+- **Écart :** `0.006` vélo (~0.45%). Comme expliqué en cours (slide 12), une variation de l'ordre de 1 à 2 % entre différentes graines est purement attribuable au hasard/bruit statistique. Cela justifie la règle de promotion (étape 3) exigeant un gain minimal de 2 % pour qu'un modèle soit promu champion.
