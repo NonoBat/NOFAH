@@ -110,3 +110,23 @@ python -m velov.train --mlflow --seed 7
 - **Seed 42 :** MAE modèle = **1.339** vélos (pointes = 1.430 vélos)
 - **Seed 7 :** MAE modèle = **1.345** vélos (pointes = 1.445 vélos)
 - **Écart :** `0.006` vélo (~0.45%). Comme expliqué en cours (slide 12), une variation de l'ordre de 1 à 2 % entre différentes graines est purement attribuable au hasard/bruit statistique. Cela justifie la règle de promotion (étape 3) exigeant un gain minimal de 2 % pour qu'un modèle soit promu champion.
+
+### Étape 3 : Registre et promotion (`velov.promote`)
+
+Le registre MLflow gère les versions du modèle via les alias `@champion`, `@challenger` et `@previous-champion` (exigence EX-14 / ADR 0002).
+
+**Règle de promotion en 3 conditions :**
+1. **Même fenêtre :** Challenger et champion évalués sur le même historique récent.
+2. **Battre la persistance :** Le challenger doit obligatoirement avoir `mae_model < mae_baseline_persistence` (EX-05).
+3. **Battre le champion de 2 % :** `mae_model <= mae_champion * (1 - 0.02)` pour s'affranchir du bruit statistique lié à la graine aléatoire.
+
+```bash
+# Simuler la décision de promotion
+python -m velov.promote
+
+# Appliquer la promotion (déplace @champion et archive l'ancien sous @previous-champion)
+python -m velov.promote --apply
+
+# Exécuter les tests de la règle de promotion
+pytest tests/test_promote.py
+```

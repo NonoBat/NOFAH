@@ -20,12 +20,12 @@ import json
 import logging
 import os
 from contextlib import asynccontextmanager
+from datetime import timedelta
 from pathlib import Path
 
 import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException
-from datetime import timedelta
 
 from velov.api.db import init_db, save_prediction
 from velov.api.schemas import PredictionRequest, PredictionResponse  # noqa: F401

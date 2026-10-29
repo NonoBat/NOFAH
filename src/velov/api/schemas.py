@@ -5,6 +5,7 @@ TP1, partie 2 : complétez les schémas. Mode : SANS IA pour cette partie.
 
 
 from __future__ import annotations
+
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, model_validator
 
 
