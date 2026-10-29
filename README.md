@@ -48,6 +48,26 @@ curl -X POST http://127.0.0.1:8000/v1/predict \
 Le `timestamp` doit porter un fuseau (`+02:00`, `Z`...) : sans fuseau, l'API répond 422.
 Les instants sont renvoyés et journalisés en UTC (`"target_timestamp": "2026-10-06T07:00:00Z"`).
 
+## Interface MLflow
+
+MLflow est installé avec `requirements-dev.txt` pour l'entraînement local. Pour démarrer
+le serveur et son interface (Docker requis) :
+
+```bash
+docker compose -f docker-compose.yml -f compose.mlflow.yaml up -d --build
+```
+
+Ouvrez `http://localhost:5000` (ou `http://<ip-de-la-vm>:5000` depuis une autre machine).
+Pour envoyer les runs d'un entraînement local vers cette interface, définissez
+`MLFLOW_TRACKING_URI` avant de lancer l'entraînement :
+
+```powershell
+$env:MLFLOW_TRACKING_URI = "http://localhost:5000"
+python -m velov.train --mlflow
+```
+
+Sous Linux/macOS, utilisez `export MLFLOW_TRACKING_URI=http://localhost:5000`.
+
 ## Exigences du projet
 
 Le service doit respecter les exigences de [docs/exigences.md](docs/exigences.md), de S1 à S9.
