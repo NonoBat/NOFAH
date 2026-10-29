@@ -38,28 +38,28 @@ from velov.features import (
     make_training_frame,
 )
 
-import duckdb
-import pandera.pandas as pa
-from pandera.typing import Series
-
-class StationHourly(pa.DataFrameModel):
-    station_id: Series[int] = pa.Field(gt=0, coerce=True)
-    timestamp: Series[pd.DatetimeTZDtype] = pa.Field(
-        dtype_kwargs={"unit": "us", "tz": "UTC"}
-    )
-    capacity: Series[int] = pa.Field(ge=0, le=80, coerce=True)
-    bikes_available: Series[int] = pa.Field(ge=0, coerce=True)
-
-    @pa.dataframe_check
-    def bikes_le_capacity(cls, df: pd.DataFrame) -> Series[bool]:
-        return df["bikes_available"] <= df["capacity"]
-
-    class Config:
-        strict = False
-        unique = ["station_id", "timestamp"]
-
 
 def load_gold_table(db_path: Path = Path("velov.duckdb")) -> pd.DataFrame:
+    import duckdb
+    import pandera.pandas as pa
+    from pandera.typing import Series
+
+    class StationHourly(pa.DataFrameModel):
+        station_id: Series[int] = pa.Field(gt=0, coerce=True)
+        timestamp: Series[pd.DatetimeTZDtype] = pa.Field(
+            dtype_kwargs={"unit": "us", "tz": "UTC"}
+        )
+        capacity: Series[int] = pa.Field(ge=0, le=80, coerce=True)
+        bikes_available: Series[int] = pa.Field(ge=0, coerce=True)
+
+        @pa.dataframe_check
+        def bikes_le_capacity(cls, df: pd.DataFrame) -> Series[bool]:
+            return df["bikes_available"] <= df["capacity"]
+
+        class Config:
+            strict = False
+            unique = ["station_id", "timestamp"]
+
     if not db_path.exists():
         raise FileNotFoundError(f"{db_path} introuvable : exécuter d'abord `dbt build`")
 
