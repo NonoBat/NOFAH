@@ -1,11 +1,7 @@
-"""Tests unitaires de la règle de promotion en trois conditions (S4 / EX-14)."""
-
-
 from velov.promote import decide
 
 
 def test_decide_fails_persistence():
-    """Condition 2 : Le modèle doit battre la persistance (EX-05)."""
     c = {"mae_model": 2.10, "mae_baseline_persistence": 2.00}
     champion = {"mae_model": 2.50}
 

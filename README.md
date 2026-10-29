@@ -130,3 +130,15 @@ python -m velov.promote --apply
 # Exécuter les tests de la règle de promotion
 pytest tests/test_promote.py
 ```
+
+### Étape 4 : Intégration continue (Workflow CI GitHub Actions)
+
+Le workflow `.github/workflows/ci.yml` s'exécute à chaque `push` et `pull_request` :
+
+1. **`lint`** : Vérifie la qualité et le formatage du code avec `ruff check .` et `ruff format --check .`.
+2. **`tests`** : Exécute l'ensemble de la suite de tests avec `pytest` :
+   - Contrat d'API et features (`tests/test_api.py`, `tests/test_features.py`)
+   - Test de modèle (`tests/test_model_quality.py`) : vérifie que le modèle bat la baseline de persistance et qu'une même seed produit un artefact reproductible au SHA-256 près.
+   - Règle de promotion du registre (`tests/test_promote.py`)
+3. **`secrets`** : Analyse l'historique complet git avec `gitleaks` (avec `.gitleaksignore` pour les faux secrets pédagogiques).
+4. **Actions épinglées** : Toutes les actions GitHub (`checkout`, `setup-python`, `gitleaks-action`) sont épinglées par leur hash de commit SHA complet pour garantir l'intégrité de la supply chain.

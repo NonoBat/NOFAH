@@ -103,9 +103,7 @@ def log_run(
             mlflow.log_params(params)
 
         # 2. Métriques de test : mae_model, mae_baseline_persistence, mae_model_peak_hours
-        metrics = {
-            k: v for k, v in metadata.get("metrics", {}).items() if k.startswith("mae_")
-        }
+        metrics = {k: v for k, v in metadata.get("metrics", {}).items() if k.startswith("mae_")}
         mlflow.log_metrics(metrics)
 
         # 3. Tags : commit git, git_dirty, empreinte et période des données
@@ -137,9 +135,7 @@ def log_run(
         if register and model_info.registered_model_version is not None:
             try:
                 client = mlflow.MlflowClient()
-                client.set_registered_model_alias(
-                    MODEL_NAME, "challenger", str(model_info.registered_model_version)
-                )
+                client.set_registered_model_alias(MODEL_NAME, "challenger", str(model_info.registered_model_version))
             except Exception as e:
                 logger.warning("Échec attribution alias challenger: %s", e)
 

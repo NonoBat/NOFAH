@@ -18,6 +18,7 @@ FEEDS = {
 
 DEFAULT_BRONZE_DIR = Path("data/bronze")
 
+
 # On récupère le JSON brut.
 def fetch_json(url: str, timeout: int = 10) -> dict:
     response = requests.get(url, timeout=timeout)
@@ -26,8 +27,8 @@ def fetch_json(url: str, timeout: int = 10) -> dict:
 
 
 def ingest(url: str, bronze: Path, feed: str) -> tuple[Path, bool]:
-    payload = fetch_json(url) # timeout de 10s
-    key = payload["last_updated"] # horodatage de la source
+    payload = fetch_json(url)  # timeout de 10s
+    key = payload["last_updated"]  # horodatage de la source
     ts = datetime.fromtimestamp(key, tz=UTC)
     target = bronze / feed / f"dt={ts:%Y-%m-%d}" / f"{key}.json"
     if target.exists():
@@ -37,6 +38,7 @@ def ingest(url: str, bronze: Path, feed: str) -> tuple[Path, bool]:
     tmp.write_text(json.dumps(payload))
     tmp.replace(target)  # écriture atomique
     return target, True
+
 
 def main() -> None:
     bronze_dir = Path(os.getenv("BRONZE_DIR", DEFAULT_BRONZE_DIR))

@@ -1,0 +1,6 @@
+[allowlist]
+description = "Faux secret pédagogique de l'exercice S2"
+paths = [
+    '''exercices/s2_audit/Dockerfile\.ia''',
+]
+
