@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import os
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import requests
@@ -18,17 +18,18 @@ FEEDS = {
 
 DEFAULT_BRONZE_DIR = Path("data/bronze")
 
+
 # On récupère le JSON brut.
 def fetch_json(url: str, timeout: int = 10) -> dict:
     response = requests.get(url, timeout=timeout)
     response.raise_for_status()
     return response.json()
 
-# (référence au pptx S3 diapo 15.)
+
 def ingest(url: str, bronze: Path, feed: str) -> tuple[Path, bool]:
-    payload = fetch_json(url) # timeout de 10s
-    key = payload["last_updated"] # horodatage de la source
-    ts = datetime.fromtimestamp(key, tz=timezone.utc)
+    payload = fetch_json(url)  # timeout de 10s
+    key = payload["last_updated"]  # horodatage de la source
+    ts = datetime.fromtimestamp(key, tz=UTC)
     target = bronze / feed / f"dt={ts:%Y-%m-%d}" / f"{key}.json"
     if target.exists():
         return target, False  # déjà ingéré
@@ -37,6 +38,7 @@ def ingest(url: str, bronze: Path, feed: str) -> tuple[Path, bool]:
     tmp.write_text(json.dumps(payload))
     tmp.replace(target)  # écriture atomique
     return target, True
+
 
 def main() -> None:
     bronze_dir = Path(os.getenv("BRONZE_DIR", DEFAULT_BRONZE_DIR))

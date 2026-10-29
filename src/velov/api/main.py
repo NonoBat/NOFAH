@@ -12,20 +12,18 @@ Lancement :
     uvicorn velov.api.main:app --reload
 """
 
-
-
 from __future__ import annotations
 
 import json
 import logging
 import os
 from contextlib import asynccontextmanager
+from datetime import timedelta
 from pathlib import Path
 
 import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException
-from datetime import timedelta
 
 from velov.api.db import init_db, save_prediction
 from velov.api.schemas import PredictionRequest, PredictionResponse  # noqa: F401
@@ -72,12 +70,14 @@ app = FastAPI(title="Vélo'v availability API", version="1.0.0", lifespan=lifesp
 def health():
     return {"status": "ok"}
 
+
 # TODO 6 [Should] : GET /ready -> 200 + version du modèle si chargé, sinon HTTPException 503
 @app.get("/ready")
 def ready():
     if STATE["model"] is None:
         raise HTTPException(status_code=503, detail="Modèle non chargé")
     return {"status": "ok", "model_version": STATE["metadata"]["model_version"]}
+
 
 # TODO 7 [Must] : POST /v1/predict
 #   - entrée : PredictionRequest ; sortie : PredictionResponse

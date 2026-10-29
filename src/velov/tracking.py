@@ -1,12 +1,3 @@
-"""Module de tracking MLflow pour Vélo'v (S4).
-
-Ce module est distinct de train.py afin que l'image de serving (API)
-n'embarque aucune dépendance vers MLflow (exigence EX-13 / ADR 0002).
-
-Usage :
-    python -m velov.train --mlflow --seed 42
-"""
-
 from __future__ import annotations
 
 import hashlib
@@ -49,7 +40,6 @@ def git_state() -> dict[str, str]:
 
 
 def compute_data_fingerprint(df: pd.DataFrame) -> str:
-    """Empreinte SHA-256 du contenu de la table triée par clé (slide 13 de S4)."""
     cols = [c for c in ["station_id", "timestamp", "capacity", "bikes_available"] if c in df.columns]
     if not cols:
         cols = list(df.columns)
@@ -62,7 +52,7 @@ def log_run(
     metadata: dict,
     out_dir: Path,
     raw_df: pd.DataFrame | None = None,
-    register: bool = False,
+    register: bool = True,
 ) -> str:
     """Journalise le run, les métriques, paramètres, tags et artefacts dans MLflow."""
     tracking_uri = os.environ.get("MLFLOW_TRACKING_URI", "http://127.0.0.1:5000")
@@ -113,9 +103,7 @@ def log_run(
             mlflow.log_params(params)
 
         # 2. Métriques de test : mae_model, mae_baseline_persistence, mae_model_peak_hours
-        metrics = {
-            k: v for k, v in metadata.get("metrics", {}).items() if k.startswith("mae_")
-        }
+        metrics = {k: v for k, v in metadata.get("metrics", {}).items() if k.startswith("mae_")}
         mlflow.log_metrics(metrics)
 
         # 3. Tags : commit git, git_dirty, empreinte et période des données
@@ -131,7 +119,7 @@ def log_run(
 
         # 5. Modèle avec signature
         signature = infer_signature(sample, pipeline.predict(sample))
-        mlflow.sklearn.log_model(
+        model_info = mlflow.sklearn.log_model(
             pipeline,
             name="model",
             signature=signature,
@@ -143,5 +131,12 @@ def log_run(
 
         # 6. Artefacts : le paquet model.joblib + metadata.json
         mlflow.log_artifacts(str(out_dir), artifact_path="package")
+
+        if register and model_info.registered_model_version is not None:
+            try:
+                client = mlflow.MlflowClient()
+                client.set_registered_model_alias(MODEL_NAME, "challenger", str(model_info.registered_model_version))
+            except Exception as e:
+                logger.warning("Échec attribution alias challenger: %s", e)
 
         return run.info.run_id
