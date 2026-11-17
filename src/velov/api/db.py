@@ -1,5 +1,5 @@
 # Nous utilisons le fichier db.py afin de faire la création de la table qui enregistre les prédictions.
-# Méthode utilisées : 
+# Méthode utilisées :
 # get_connection() qui permet de se connecter à la base de données
 # init_db() qui permet de créer la table
 # save_prediction() qui permet d'enregistrer une prédiction
@@ -45,6 +45,9 @@ def get_connection() -> psycopg.Connection:
 
 
 def init_db() -> None:
+    if "DATABASE_URL" not in os.environ:
+        logger.info("DATABASE_URL absent : journalisation désactivée.")
+        return
     try:
         with get_connection() as conn:
             conn.execute(CREATE_TABLE_SQL)
@@ -67,6 +70,8 @@ def save_prediction(
     model_version: str,
 ) -> None:
     # Enregistrement de la prédiction.
+    if "DATABASE_URL" not in os.environ:
+        return
     try:
         with get_connection() as conn:
             conn.execute(

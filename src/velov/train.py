@@ -49,9 +49,7 @@ def load_gold_table(db_path: Path = Path("velov.duckdb")) -> pd.DataFrame:
 
     class StationHourly(pa.DataFrameModel):
         station_id: Series[int] = pa.Field(gt=0, coerce=True)
-        timestamp: Series[pd.DatetimeTZDtype] = pa.Field(
-            dtype_kwargs={"unit": "us", "tz": "UTC"}
-        )
+        timestamp: Series[pd.DatetimeTZDtype] = pa.Field(dtype_kwargs={"unit": "us", "tz": "UTC"})
         capacity: Series[int] = pa.Field(ge=0, le=80, coerce=True)
         bikes_available: Series[int] = pa.Field(ge=0, coerce=True)
 
@@ -102,9 +100,7 @@ def build_pipeline(
             ("num", "passthrough", NUMERIC_FEATURES),
         ]
     )
-    model = HistGradientBoostingRegressor(
-        max_iter=max_iter, learning_rate=learning_rate, random_state=seed
-    )
+    model = HistGradientBoostingRegressor(max_iter=max_iter, learning_rate=learning_rate, random_state=seed)
     return Pipeline([("preprocess", preprocess), ("model", model)])
 
 
