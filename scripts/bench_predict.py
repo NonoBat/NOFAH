@@ -1,17 +1,3 @@
-"""Benchmark des étapes de _predict() de l'API Vélo'v (S5, Étape 3).
-
-Mesure chaque étape de la prédiction sans réseau pour trouver où part le temps :
-1. Validation Pydantic
-2. DataFrame + add_features
-3. model.predict (1 ligne)
-4. Bornage et réponse (PredictionResponse)
-
-Puis mesure model.predict sur des lots de taille croissante (batching).
-
-Usage :
-    python scripts/bench_predict.py [--n 500] [--batch 1 100 1000]
-"""
-
 from __future__ import annotations
 
 import argparse

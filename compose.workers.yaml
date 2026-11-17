@@ -1,0 +1,13 @@
+# Étape 4 (TP5) : redéfinit la commande pour lancer 2 workers uvicorn.
+# Même image, deux processus qui chargent chacun le modèle.
+services:
+  api:
+    command:
+      - uvicorn
+      - velov.api.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+      - --workers
+      - "2"

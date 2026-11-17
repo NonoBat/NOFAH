@@ -192,6 +192,35 @@ Chronométrage isolé avec `python scripts/bench_predict.py --n 500` (chargement
 > **Preuve et identification du goulot :**
 > Le goulot d'étranglement de l'API est constitué à **99.6 %** par l'exécution CPU synchrone en Python : **59.1 % du temps dans l'inférence scikit-learn (`model.predict`, ~3.14 ms)** et **40.5 % dans la préparation des features pandas (`add_features`, ~2.15 ms)**. À l'inverse, la validation contractuelle Pydantic et l'assemblage de la réponse sont virtuellement instantanés (< 0.4 % du temps).
 
+### Comparaison d'optimisation (Étape 4 - w1 contre w2)
+
+La question : *Un worker et un cœur de plus, le débit double-t-il ?* (S5 · 12, règle 6).
+
+- **w1** : 1 worker Uvicorn, bridé à 1 cœur CPU (`docker update --cpus 1`).
+- **w2** : 2 workers Uvicorn (`compose.workers.yaml`), bridé à 2 cœurs CPU (`docker update --cpus 2`).
+- Machine : même hôte (8 cœurs, Locust sur les cœurs restants).
+
+#### 1. Tableaux comparatifs côte à côte (`results/w1/` vs `results/w2/`)
+
+| Usagers | Débit w1 (req/s) | p95 w1 (ms) | SLO w1 | Débit w2 (req/s) | p95 w2 (ms) | SLO w2 | Gain débit | Évolution latence p95 |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **10** | 8.7 | 60 ms | ok | 8.8 | 64 ms | ok | +1 % | stable |
+| **25** | 21.0 | 68 ms | ok | 21.2 | 64 ms | ok | +1 % | -6 % |
+| **50** | 42.2 | 93 ms | ok | 42.5 | 89 ms | ok | +1 % | -4 % |
+| **100** | 58.5 | 1 200 ms | KO | **73.9** | **670 ms** | KO | **+26.3 %** | **-44.2 %** |
+| **150** | 58.1 | 2 500 ms | KO | **63.0** | **1 700 ms** | KO | **+8.4 %** | **-32.0 %** |
+
+#### 2. Mémoire consommée (`docker stats --no-stream`)
+- **1 worker (`w1`)** : **168 Mo**
+- **2 workers (`w2`)** : **315 Mo** ($\times 1.88$)
+*Chaque worker chargeant son propre modèle en mémoire dans son processus Python, l'empreinte mémoire double quasiment.*
+
+#### 3. Conclusion chiffrée : le débit double-t-il ?
+> **Non, le débit ne double pas.**
+> - Le débit maximal progresse de **58.5 req/s à 73.9 req/s (+26.3 %)** à 100 usagers, loin d'un doublement linéaire ($\times 2$ nécessiterait ~117 req/s).
+> - **Cause** : Même avec 2 workers CPU indépendants, la journalisation en base PostgreSQL (`storage.py`) crée un goulot d'I/O partagé, et le multiplexage des sockets limite le gain linéaire pur.
+> - **En revanche, le gain majeur réside dans la réduction massive de la latence sous saturation** : le temps de réponse au p95 est divisé par près de deux à 100 usagers (**670 ms contre 1 200 ms**, soit **-44.2 %**), réduisant nettement l'accumulation dans la file d'attente.
+
 ## Structure
 
 ```

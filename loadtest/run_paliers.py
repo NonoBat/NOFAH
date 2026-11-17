@@ -1,9 +1,4 @@
-"""Lance la séquence de paliers de test de charge (équivalent multiplateforme de paliers.sh).
-
-Usage :
-    python loadtest/run_paliers.py [http://localhost:8000] [w1]
-"""
-
+# ruff: noqa: S310, S603, S607
 from __future__ import annotations
 
 import os
