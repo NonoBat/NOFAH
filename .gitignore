@@ -20,3 +20,6 @@ mlruns/
 *.duckdb.wal
 velov_dbt/target/
 velov_dbt/dbt_packages/
+
+# Présentations / cours
+*.pptx

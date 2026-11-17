@@ -79,6 +79,14 @@ def ready():
     return {"status": "ok", "model_version": STATE["metadata"]["model_version"]}
 
 
+@app.get("/v1/model")
+def get_model():
+    """Renvoie les métadonnées et la version du modèle actuellement chargé."""
+    if STATE["metadata"] is None:
+        raise HTTPException(status_code=503, detail="Modèle non chargé")
+    return STATE["metadata"]
+
+
 # TODO 7 [Must] : POST /v1/predict
 #   - entrée : PredictionRequest ; sortie : PredictionResponse
 #   - construire un DataFrame d'une ligne, appliquer add_features, sélectionner FEATURES
@@ -91,7 +99,7 @@ def predict(request: PredictionRequest):
     """Prédit le nombre de vélos disponibles à t + 1 h."""
     if STATE["model"] is None:
         raise HTTPException(status_code=503, detail="Modèle non chargé")
-    df = pd.DataFrame([request.dict()])
+    df = pd.DataFrame([request.model_dump()])
     df = add_features(df)
     df = df[FEATURES]
     prediction = STATE["model"].predict(df)[0]

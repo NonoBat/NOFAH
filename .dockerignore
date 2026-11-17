@@ -1,4 +1,4 @@
-# Cit & IDE
+# Git & IDE
 .git
 .gitignore
 .vscode/
@@ -8,6 +8,14 @@
 .env
 *.env
 .venv
+
+# Données, runs et base locale
+data/
+mlruns/
+mlflow.db
+*.duckdb
+velov_dbt/
+tests/
 
 # Cache Python
 __pycache__/

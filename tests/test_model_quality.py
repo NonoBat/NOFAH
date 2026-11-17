@@ -42,4 +42,3 @@ def test_reproducibility_same_seed(tmp_path):
     hash1 = sha256_of(out1 / MODEL_FILENAME)
     hash2 = sha256_of(out2 / MODEL_FILENAME)
     assert hash1 == hash2
-
