@@ -111,6 +111,87 @@ pip install -r requirements-loadtest.txt
 python loadtest/summary.py results/w1 --markdown  # p50, p95, p99, débit, erreurs, capacité sous le SLO
 ```
 
+### Performance & Protocole de mesure (Étape 1 - Mesure locale)
+
+- **Mode de mesure** : Mesure locale (API et Locust sur le même poste, VM indisponible).
+- **Isolation CPU** : API bornée strictement à 1 cœur CPU (`docker update --cpus 1 nofah-api-1`), Locust tourne sur les autres cœurs du poste pour éviter la contention.
+- **Machine hôte** : 8 cœurs CPU (`os.cpu_count() = 8`).
+- **Services locaux** : MLflow et tout service inutile arrêtés. Seule l'API (`velov-api:dev`) et la base Postgres tournent.
+- **Versions** : Locust 2.47.0, Python 3.12.10, image API basée sur `python:3.12-slim`.
+- **Commit testé** : `00a0568` (branche `tp5`).
+- **Date & Heure** : 17 novembre 2026 à 12:04.
+
+#### Validation du premier essai (10 usagers, 1 minute)
+
+| Endpoint | Nb requêtes | Échecs | Débit (req/s) | p50 (ms) | p95 (ms) | p99 (ms) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `POST /v1/predict` | 514 | 0 (0.00 %) | 8.63 | 69 ms | 130 ms | 460 ms |
+| `GET /health` | 45 | 0 (0.00 %) | 0.76 | 6 ms | 23 ms | 32 ms |
+| **Total / Agrégé** | **559** | **0 (0.00 %)** | **9.39** | **68 ms** | **120 ms** | **460 ms** |
+
+### Courbe de saturation (Étape 2 - 1 worker sur 1 cœur CPU)
+
+Mesure effectuée via `loadtest/run_paliers.py http://localhost:8000 w1` (1 min échauffement, puis 2 min par palier) :
+
+| usagers | requêtes | erreurs % | débit req/s | p50 ms | p95 ms | p99 ms | SLO p95 (<= 200 ms) |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 10 | 1 029 | 0.0 % | 8.7 | 53 | 60 | 76 | **ok** |
+| 25 | 2 496 | 0.0 % | 21.0 | 53 | 68 | 90 | **ok** |
+| 50 | 5 016 | 0.0 % | 42.2 | 56 | 93 | 160 | **ok** |
+| 100 | 6 941 | 0.0 % | 58.5 | 620 | 1 200 | 1 500 | **KO** |
+| 150 | 6 902 | 0.0 % | 58.1 | 1 400 | 2 500 | 3 100 | **KO** |
+
+#### Analyse et conclusion :
+- **Capacité sous le SLO (p95 <= 200 ms)** : **~42 req/s** (atteinte à 50 usagers).
+- **Point de bascule (coude de saturation)** : Le système sature entre 50 et 100 usagers. Le débit maximal plafonne à **~58 req/s**.
+- **Effet de file d'attente (Loi de Little $L = \lambda \times W$)** : Au-delà de la capacité maximale du cœur (58 req/s), le débit ne progresse plus mais les requêtes s'accumulent dans la file d'attente Uvicorn. La latence au p95 explose alors de 93 ms à 1 200 ms (puis 2 500 ms à 150 usagers), avec 0 % d'erreurs HTTP mais un non-respect total du SLO.
+- **Ressources mesurées** : L'API plafonne à 100 % d'un cœur CPU lors des paliers 100 et 150 usagers, tandis que Locust reste sous 25 % d'utilisation CPU sur les cœurs restants de l'hôte.
+
+```
+Débit (req/s) & Latence p95 (ms) selon les usagers :
+Débit (req/s)                                  p95 (ms)
+  60 |                                [58.5]--[58.1]       3000 |                              [2500]
+  50 |                         [42.2]/                      2000 |
+  40 |                                                     1000 |                      [1200]
+  30 |                  [21.0]/                              500 |
+  20 |           [8.7]/                                      200 |---------------------------- Ligne SLO (200 ms)
+  10 |                                                       100 |         [60]---[68]---[93]
+   0 +------------+-------+-------+-------+--------            0 +-----------+------+------+------+------
+     0           10      25      50      100      150 usagers    0          10     25     50    100    150 usagers
+```
+
+### Profilage interne et goulot d'étranglement (Étape 3 - scripts/bench_predict.py)
+
+#### 1. Temps passé dans l'API (`X-Process-Time-Ms`)
+Mesuré via `curl` sur `POST /v1/predict` (avec `payload.json`) :
+- **En régime établi** : `X-Process-Time-Ms` oscille entre **8.7 ms et 10.1 ms**.
+- **Écart avec Locust** : À 10 usagers, Locust mesure un p50 de ~53 à 68 ms. L'écart (~43 à 58 ms) provient du protocole HTTP/TCP complet (RTT aller-retour réseau/sockets, pool de workers et boucle événementielle d'Uvicorn).
+
+#### 2. Décomposition des 4 étapes de `_predict()` (500 itérations sans réseau)
+Chronométrage isolé avec `python scripts/bench_predict.py --n 500` (chargement du modèle et échauffement exclus) :
+
+| Étape de calcul | p50 (ms) | p95 (ms) | Part du temps |
+| :--- | :--- | :--- | :--- |
+| **Validation Pydantic** | 0.007 ms | 0.016 ms | 0.1 % |
+| **DataFrame + add_features** | 2.146 ms | 2.825 ms | 40.5 % |
+| **model.predict, 1 ligne** | 3.136 ms | 4.093 ms | 59.1 % |
+| **Bornage et réponse** | 0.016 ms | 0.026 ms | 0.3 % |
+| **Total calcul interne** | **5.305 ms** | **-** | **100 %** |
+
+#### 3. Inférence par lots (`model.predict` avec `--batch 1 100 1000`)
+
+| Taille du lot (lignes) | Temps du lot p50 (ms) | Temps du lot p95 (ms) | Temps par prédiction unitaire |
+| :---: | :---: | :---: | :---: |
+| **1** | 3.19 ms | 4.33 ms | 3.19 ms |
+| **100** | 3.51 ms | 4.67 ms | 35.1 µs |
+| **1000** | 6.88 ms | 8.86 ms | 6.9 µs |
+
+*Constat : Le coût fixe de l'inférence est largement amorti par le traitement par lots (divisé par près de 460 à 1000 lignes).*
+
+#### 4. Conclusion sur le goulot d'étranglement
+> **Preuve et identification du goulot :**
+> Le goulot d'étranglement de l'API est constitué à **99.6 %** par l'exécution CPU synchrone en Python : **59.1 % du temps dans l'inférence scikit-learn (`model.predict`, ~3.14 ms)** et **40.5 % dans la préparation des features pandas (`add_features`, ~2.15 ms)**. À l'inverse, la validation contractuelle Pydantic et l'assemblage de la réponse sont virtuellement instantanés (< 0.4 % du temps).
+
 ## Structure
 
 ```
