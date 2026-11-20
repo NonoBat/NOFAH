@@ -221,6 +221,27 @@ La question : *Un worker et un cœur de plus, le débit double-t-il ?* (S5 · 12
 > - **Cause** : Même avec 2 workers CPU indépendants, la journalisation en base PostgreSQL (`storage.py`) crée un goulot d'I/O partagé, et le multiplexage des sockets limite le gain linéaire pur.
 > - **En revanche, le gain majeur réside dans la réduction massive de la latence sous saturation** : le temps de réponse au p95 est divisé par près de deux à 100 usagers (**670 ms contre 1 200 ms**, soit **-44.2 %**), réduisant nettement l'accumulation dans la file d'attente.
 
+### TP5a : DistilBERT en int8 (Triplet Taille, Latence, Précision)
+
+Mesure du triplet d'optimisation via `python scripts/bench_quantization.py` :
+- **Modèle** : `distilbert-base-uncased-finetuned-sst-2-english` (Hugging Face)
+- **Données** : 872 phrases de validation du benchmark SST-2 (`nyu-mll/glue`)
+- **Conditions de test** : 1 seul thread CPU (`torch.set_num_threads(1)`), phrase de 128 tokens, 50 répétitions.
+
+#### 1. Tableau récapitulatif du triplet
+
+| Variante | Taille (Mo) | p50 (ms) | p95 (ms) | Précision SST-2 | Accord float32 | Écart max logits |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **float32** (référence) | 255.4 Mo | 39.4 ms | 53.6 ms | 91.06 % | 100.00 % | 0.0000 |
+| **int8 torch.ao** (`quantize_dynamic`) | **132.4 Mo** | **25.1 ms** | **32.8 ms** | 90.71 % | 98.74 % | 0.4497 |
+| **int8 torchao** (`Int8Dynamic...`) | **132.8 Mo** | 42.1 ms | 58.7 ms | 90.71 % | 98.39 % | 0.4673 |
+
+#### 2. Analyse et conclusion :
+- **Taille mémoire (-48 %)** : La quantification divise par près de 2 la taille du modèle en mémoire et sur disque (de 255 Mo à 132 Mo), permettant d'embarquer le modèle sur des machines plus légères ou d'augmenter le nombre d'instances par nœud.
+- **Latence (-36 % avec `torch.ao`)** : L'accélération atteint $\times 1.57$ (latence réduite de 39.4 ms à 25.1 ms au p50) grâce aux instructions vectorielles entières du CPU.
+- **Précision préservée (90.71 % contre 91.06 %)** : La perte de performance est négligeable (-0.35 point de pourcentage), avec un accord de **98.74 %** sur les prédictions par rapport à la version float32 (seules 11 phrases sur 872 changent de classe).
+- **Enseignement technique sur les bibliothèques** : `torch.ao.quantization` bien que dépréciée par PyTorch, bénéficie encore d'implémentations C++ plus véloces sur CPU x86 que `torchao` qui présente un léger surcoût d'ordonnancement en mode eager (42 ms contre 25 ms).
+
 ## Structure
 
 ```
