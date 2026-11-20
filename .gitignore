@@ -16,6 +16,7 @@ mlruns/
 
 # Secrets
 .env
+certs/
 
 # dbt (S3)
 velov_dbt/target/

@@ -36,6 +36,8 @@ docker compose down -v
 
 ## 3. Vérifier que tout va bien
 
+### 3.1 Vérifications de santé standards
+
 | Vérification | Commande | Résultat attendu |
 |---|---|---|
 | Process répond (liveness) | `curl -s http://<hôte>:8000/health` | `{"status":"ok"}` |
@@ -43,6 +45,20 @@ docker compose down -v
 | Métadonnées du modèle | `curl -s http://<hôte>:8000/v1/model` | HTTP 200 + JSON complet des métadonnées |
 | Prédiction test | `curl -s -X POST http://<hôte>:8000/v1/predict -H "content-type: application/json" -d @payload.json` | HTTP 200 + `predicted_bikes` borné |
 | Utilisation CPU / Mémoire | `docker stats --no-stream` | API < 85 % CPU, Mémoire stable |
+
+### 3.2 Vérifications du proxy HTTPS et de la stack d'exploitation (S6 · 09 - EX-19)
+
+Depuis le poste client, face à la VM (`IP_VM` = 192.168.1.229) :
+
+| # | Test | Commande | Code attendu | Explication |
+|---|---|---|---|---|
+| 1 | Redirection HTTP → HTTPS | `curl -s -o /dev/null -w "%{http_code} %{redirect_url}\n" http://192.168.1.229/ready` | **301** `https://192.168.1.229/ready` | Nginx force le passage en HTTPS |
+| 2 | Rejet TLS non sécurisé | `curl -sS https://192.168.1.229/ready` | **curl (60)** | Certificat auto-signé non reconnu par défaut |
+| 3 | Appel HTTPS sécurisé | `curl -s --cacert certs/velov.crt https://192.168.1.229/ready` | **200** | L'autorité locale valide le certificat |
+| 4 | Protection de `/metrics` | `curl -s --cacert certs/velov.crt -o /dev/null -w "%{http_code}\n" https://192.168.1.229/metrics` | **404** | Route interne fermée à l'extérieur |
+| 5 | Panne API en amont | `docker compose stop api && curl -s --cacert certs/velov.crt -o /dev/null -w "%{http_code}\n" https://192.168.1.229/ready` | **502** | Nginx renvoie Bad Gateway |
+
+*(Après le test 5, relancer l'API : `docker compose start api`)*. Le port 8000 ne doit plus répondre directement depuis l'extérieur.
 
 ---
 
@@ -116,6 +132,37 @@ curl -s http://localhost:8000/ready
 
 ---
 
-## 7. Contacts et escalade
+## 7. Alertes Prometheus et Surveillance du Modèle (S6 - EX-20, EX-21)
+
+### 7.1 Alertes du service (`docker/prometheus/alerts.yml`)
+
+| Alerte | Condition PromQL | Seuil & Durée | Diagnostic | Action immédiate |
+|---|---|---|---|---|
+| `ApiInjoignable` | `up{job="velov-api"} == 0` | 1 minute | API arrêtée ou crash process | `docker compose logs api` puis `docker compose restart api` |
+| `LatenceHorsSLO` | `velov:latence_sli:ratio_rate5m < 0.95` | Part < 200 ms sous 95 % pendant 5 min | Pic de trafic ou blocage SQL synchrone | Passer à 2 workers (`compose.workers.yaml`) ou vérifier la base |
+| `Erreurs5xx` | Part des statuts 5xx sur `/v1/predict` | > 1 % pendant 5 min | Erreur non gérée ou modèle corrompu | Inspecter les stacktraces dans les logs de l'API |
+
+### 7.2 Surveillance de la dérive et de l'erreur réelle (`velov.monitor`)
+
+Pour lancer le diagnostic de dérive et de performance réelle face à la persistance :
+```bash
+# Vérifier une période donnée (semaine rejouée ou base de production)
+python -m velov.monitor --period normal
+python -m velov.monitor --period froid
+python -m velov.monitor --period demenagement
+python -m velov.monitor --period db
+```
+
+**Critères de décision :**
+1. **Dérive des entrées seule** (ex: température à 4.46 en grand froid) avec ratio d'erreur $\le 0.80$ : **Ne rien faire** (le modèle résiste).
+2. **Ratio d'erreur $\ge 0.90$ ou décrochage d'un segment** (stations individuelles avec ratio $> 1.0$) :
+   - Analyser les stations concernées.
+   - Lancer le réentraînement : `python -m velov.retrain`.
+   - Comparer et promouvoir si validation : `python -m velov.promote`.
+   - Redéployer : `docker compose restart api`.
+
+---
+
+## 8. Contacts et escalade
 - **Équipe MLOps / Maintenance** : Binôme groupe 9
 - **Escalade astreinte** : Consulter les logs Docker et appliquer le rollback de la section 5.3 si le p95 ou les 5xx violent le SLO plus de 5 minutes.
