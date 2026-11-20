@@ -9,9 +9,44 @@
 groups:
   - name: velov-api
     rules:
+      - record: velov:latence_sli:ratio_rate5m
+        expr: |
+          sum by (job) (
+            rate(http_request_duration_seconds_bucket{job="velov-api",handler="/v1/predict",le="0.2"}[5m])
+          )
+          /
+          sum by (job) (
+            rate(http_request_duration_seconds_count{job="velov-api",handler="/v1/predict"}[5m])
+          )
+
       - alert: ApiInjoignable
         expr: up{job="velov-api"} == 0
         for: 1m
         labels: {severity: page}
         annotations:
           summary: "Prometheus ne joint plus l'API depuis 1 min"
+
+      - alert: LatenceHorsSLO
+        expr: velov:latence_sli:ratio_rate5m < 0.95
+        for: 5m
+        labels: {severity: warning}
+        annotations:
+          summary: "Moins de 95 % des requêtes /v1/predict sont servies sous 200 ms"
+          description: "Le SLI de latence est inférieur à 95 % depuis 5 minutes."
+
+      - alert: Erreurs5xx
+        expr: |
+          (
+            sum by (job) (
+              rate(http_requests_total{job="velov-api",handler="/v1/predict",status=~"5.."}[5m])
+            )
+            /
+            sum by (job) (
+              rate(http_requests_total{job="velov-api",handler="/v1/predict"}[5m])
+            )
+          ) > 0.01
+        for: 5m
+        labels: {severity: warning}
+        annotations:
+          summary: "Plus de 1 % des requêtes /v1/predict retournent une erreur 5xx"
+          description: "Le taux d'erreurs HTTP 5xx dépasse 1 % depuis 5 minutes."

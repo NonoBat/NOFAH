@@ -32,6 +32,7 @@ import joblib
 import numpy as np
 import pandas as pd
 from fastapi import FastAPI, HTTPException, Request
+from prometheus_fastapi_instrumentator import Instrumentator
 
 from velov.api import storage
 from velov.api.schemas import (
@@ -94,6 +95,11 @@ app = FastAPI(
     description="Prédit le nombre de vélos disponibles dans 1 h, par station.",
     lifespan=lifespan,
 )
+
+Instrumentator(
+    should_group_status_codes=False,
+    should_ignore_untemplated=True,
+).instrument(app).expose(app, include_in_schema=False)
 
 
 @app.middleware("http")
