@@ -32,6 +32,8 @@ import joblib
 import numpy as np
 import pandas as pd
 from fastapi import FastAPI, HTTPException, Request
+from prometheus_client import Gauge
+from prometheus_fastapi_instrumentator import Instrumentator
 
 from velov.api import storage
 from velov.api.schemas import (
@@ -72,6 +74,7 @@ async def lifespan(app: FastAPI):
     model_dir = Path(os.getenv("MODEL_DIR", "models"))
     try:
         STATE["model"], STATE["metadata"] = load_model(model_dir)
+        MODEL_INFO.labels(model_version=STATE["metadata"]["model_version"]).set(1)
         logger.info("Modèle %s chargé depuis %s", STATE["metadata"]["model_version"], model_dir)
     except Exception:
         # Le process démarre quand même : /health répond, /ready signale le problème.
@@ -94,6 +97,13 @@ app = FastAPI(
     description="Prédit le nombre de vélos disponibles dans 1 h, par station.",
     lifespan=lifespan,
 )
+
+MODEL_INFO = Gauge("velov_model_info", "Modèle servi", ["model_version"])
+
+Instrumentator(excluded_handlers=["/metrics"]).instrument(
+    app,
+    latency_lowr_buckets=(0.01, 0.025, 0.05, 0.1, 0.2, 0.5, 1),
+).expose(app, include_in_schema=False)
 
 
 @app.middleware("http")
